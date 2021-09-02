@@ -1,8 +1,8 @@
 ﻿using FarmApp.Domain.Interfaces;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Interfaces.Repositories;
+using FarmApp.Domain.Interfaces.Services;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,8 +21,7 @@ namespace FarmApp.Service.Services
         public async Task<string> GeraToken(string login, string senha)
         {
             var cliente = await _clienteRepository.GetCliente(login, senha);
-            //if(cliente != null)
-            if(login == "Teste" && senha == "Teste")
+            if (cliente != null)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -30,8 +29,7 @@ namespace FarmApp.Service.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    //new Claim(ClaimTypes.Name, cliente.Login.ToString())
-                    new Claim(ClaimTypes.Name, "Teste")
+                        new Claim(ClaimTypes.Name, cliente.Nome.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddHours(2),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

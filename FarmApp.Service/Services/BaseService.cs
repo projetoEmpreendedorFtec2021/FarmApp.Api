@@ -1,4 +1,6 @@
 ﻿using FarmApp.Domain.Interfaces;
+using FarmApp.Domain.Interfaces.Repositories;
+using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
 using FluentValidation;
 using System;
@@ -16,9 +18,17 @@ namespace FarmApp.Service.Services
         }
         public async Task<TEntity> AddAsync<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>
         {
-            Validate(obj, Activator.CreateInstance<TValidator>());
-            await _repository.InsertAsync(obj);
-            return obj;
+            try
+            {
+                Validate(obj, Activator.CreateInstance<TValidator>());
+                await _repository.InsertAsync(obj);
+                return obj;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public async Task DeleteAsync(int id) => await _repository.DeleteAsync(id);

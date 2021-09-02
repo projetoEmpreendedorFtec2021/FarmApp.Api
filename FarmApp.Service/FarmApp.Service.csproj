@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FarmApp.Domain\FarmApp.Domain.csproj" />
-    <ProjectReference Include="..\FarmApp.Infra.CrossCutting\FarmApp.Infra.CrossCutting.csproj" />
     <ProjectReference Include="..\FarmApp.Infra.Data\FarmApp.Infra.Data.csproj" />
   </ItemGroup>
 

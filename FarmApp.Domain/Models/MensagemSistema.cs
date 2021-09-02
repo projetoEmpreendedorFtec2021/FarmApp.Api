@@ -9,7 +9,7 @@ namespace FarmApp.Domain.Models
     {
         public MensagemSistema()
         {
-            Conta = new HashSet<Conta>();
+            ContaMensagemSistemas = new HashSet<ContaMensagemSistema>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace FarmApp.Domain.Models
 
         public virtual Midia IdmidiaNavigation { get; set; }
         public virtual Motivo IdmotivoNavigation { get; set; }
-        public virtual ICollection<Conta> Conta { get; set; }
+        public virtual ICollection<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
     }
 }

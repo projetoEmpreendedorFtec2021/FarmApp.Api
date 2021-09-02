@@ -15,9 +15,6 @@ namespace FarmApp.Domain.Models
         public int Id { get; set; }
         public sbyte? TemFarmacia { get; set; }
         public string ContaFarmacia { get; set; }
-        public string NumeroEndereço { get; set; }
-        public string ComplementoEndereco { get; set; }
-        public string ContaPessoalcol { get; set; }
         public int IdenderecoContapessoal { get; set; }
         public int IdtipoEndereco { get; set; }
 

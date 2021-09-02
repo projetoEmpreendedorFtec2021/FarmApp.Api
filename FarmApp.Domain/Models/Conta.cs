@@ -10,18 +10,18 @@ namespace FarmApp.Domain.Models
         public Conta()
         {
             Clientes = new HashSet<Cliente>();
+            ContaMensagemSistemas = new HashSet<ContaMensagemSistema>();
         }
 
         public int Id { get; set; }
         public string DataCriacao { get; set; }
         public string DataEncerramento { get; set; }
         public int IdcontaPessoal { get; set; }
-        public int IdcontaFarmacia { get; set; }
-        public int IdmensagemSistema { get; set; }
+        public int? IdcontaFarmacia { get; set; }
 
         public virtual ContaFarmacia IdcontaFarmaciaNavigation { get; set; }
         public virtual ContaPessoal IdcontaPessoalNavigation { get; set; }
-        public virtual MensagemSistema IdmensagemSistemaNavigation { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; }
+        public virtual ICollection<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
     }
 }

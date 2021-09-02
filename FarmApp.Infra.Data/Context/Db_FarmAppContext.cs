@@ -1,6 +1,7 @@
-﻿using FarmApp.Domain.Models;
-using FarmApp.Infra.Data.Mapping;
+﻿using System;
+using FarmApp.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -25,6 +26,7 @@ namespace FarmApp.Infra.Data.Context
         public virtual DbSet<ClienteConsentimento> ClienteConsentimentos { get; set; }
         public virtual DbSet<Consentimento> Consentimentos { get; set; }
         public virtual DbSet<ContaFarmacia> ContaFarmacia { get; set; }
+        public virtual DbSet<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
         public virtual DbSet<ContaPessoal> ContaPessoals { get; set; }
         public virtual DbSet<Conta> Conta { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
@@ -48,7 +50,7 @@ namespace FarmApp.Infra.Data.Context
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=35.222.117.54;port=3306;database=db_farmapp;uid=root;password=Ftec@2021", ServerVersion.Parse("5.7.34-mysql"));
+                optionsBuilder.UseMySql("server=35.222.117.54;port=3306;database=db_farmapp;uid=root;password=Ftec@2021", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.34-mysql"));
             }
         }
 
@@ -141,8 +143,6 @@ namespace FarmApp.Infra.Data.Context
             {
                 entity.ToTable("cliente");
 
-                entity.HasIndex(e => e.Idconsentimento, "fk_cliente_consentimento1_idx");
-
                 entity.HasIndex(e => e.Idconta, "fk_cliente_conta1_idx");
 
                 entity.Property(e => e.Id)
@@ -154,17 +154,9 @@ namespace FarmApp.Infra.Data.Context
                     .HasMaxLength(15)
                     .HasColumnName("celular");
 
-                entity.Property(e => e.Clientecol)
-                    .HasMaxLength(45)
-                    .HasColumnName("clientecol");
-
                 entity.Property(e => e.Cpf)
                     .HasMaxLength(20)
                     .HasColumnName("cpf");
-
-                entity.Property(e => e.Idconsentimento)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconsentimento");
 
                 entity.Property(e => e.Idconta)
                     .HasColumnType("int(11)")
@@ -174,6 +166,10 @@ namespace FarmApp.Infra.Data.Context
                     .HasMaxLength(50)
                     .HasColumnName("login");
 
+                entity.Property(e => e.Nome)
+                    .HasMaxLength(45)
+                    .HasColumnName("nome");
+
                 entity.Property(e => e.Senha)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -182,7 +178,6 @@ namespace FarmApp.Infra.Data.Context
                 entity.HasOne(d => d.IdcontaNavigation)
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.Idconta)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_cliente_conta1");
             });
 
@@ -198,6 +193,10 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnType("int(11)")
                     .ValueGeneratedNever()
                     .HasColumnName("id");
+
+                entity.Property(e => e.Data)
+                    .HasColumnType("datetime")
+                    .HasColumnName("data");
 
                 entity.Property(e => e.Idcliente)
                     .HasColumnType("int(11)")
@@ -234,7 +233,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("data");
 
                 entity.Property(e => e.Finalidade)
-                    .HasMaxLength(100)
+                    .HasMaxLength(1000)
                     .HasColumnName("finalidade");
 
                 entity.Property(e => e.Situacao)
@@ -308,6 +307,40 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_conta_farmacia_cep1");
             });
 
+            modelBuilder.Entity<ContaMensagemSistema>(entity =>
+            {
+                entity.ToTable("conta_mensagem_sistema");
+
+                entity.HasIndex(e => e.Idconta, "fk_conta1_idx");
+
+                entity.HasIndex(e => e.IdmensagemSistema, "fk_mensagem_sistema1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Idconta)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("idconta");
+
+                entity.Property(e => e.IdmensagemSistema)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("idmensagem_sistema");
+
+                entity.HasOne(d => d.IdcontaNavigation)
+                    .WithMany(p => p.ContaMensagemSistemas)
+                    .HasForeignKey(d => d.Idconta)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_conta1");
+
+                entity.HasOne(d => d.IdmensagemSistemaNavigation)
+                    .WithMany(p => p.ContaMensagemSistemas)
+                    .HasForeignKey(d => d.IdmensagemSistema)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_mensagem_sistema1");
+            });
+
             modelBuilder.Entity<ContaPessoal>(entity =>
             {
                 entity.ToTable("conta_pessoal");
@@ -319,17 +352,9 @@ namespace FarmApp.Infra.Data.Context
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
-                entity.Property(e => e.ComplementoEndereco)
-                    .HasMaxLength(10)
-                    .HasColumnName("complemento_endereco");
-
                 entity.Property(e => e.ContaFarmacia)
                     .HasMaxLength(45)
                     .HasColumnName("conta_farmacia");
-
-                entity.Property(e => e.ContaPessoalcol)
-                    .HasMaxLength(45)
-                    .HasColumnName("conta_pessoalcol");
 
                 entity.Property(e => e.IdenderecoContapessoal)
                     .HasColumnType("int(11)")
@@ -338,10 +363,6 @@ namespace FarmApp.Infra.Data.Context
                 entity.Property(e => e.IdtipoEndereco)
                     .HasColumnType("int(11)")
                     .HasColumnName("idtipo_endereco");
-
-                entity.Property(e => e.NumeroEndereço)
-                    .HasMaxLength(10)
-                    .HasColumnName("numero_endereço");
 
                 entity.Property(e => e.TemFarmacia)
                     .HasColumnType("tinyint(4)")
@@ -361,8 +382,6 @@ namespace FarmApp.Infra.Data.Context
                 entity.HasIndex(e => e.IdcontaFarmacia, "fk_conta_conta_farmacia1_idx");
 
                 entity.HasIndex(e => e.IdcontaPessoal, "fk_conta_conta_pessoal_idx");
-
-                entity.HasIndex(e => e.IdmensagemSistema, "fk_conta_mensagem_sistema1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
@@ -385,14 +404,9 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnType("int(11)")
                     .HasColumnName("idconta_pessoal");
 
-                entity.Property(e => e.IdmensagemSistema)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idmensagem_sistema");
-
                 entity.HasOne(d => d.IdcontaFarmaciaNavigation)
                     .WithMany(p => p.Conta)
                     .HasForeignKey(d => d.IdcontaFarmacia)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_conta_conta_farmacia1");
 
                 entity.HasOne(d => d.IdcontaPessoalNavigation)
@@ -400,12 +414,6 @@ namespace FarmApp.Infra.Data.Context
                     .HasForeignKey(d => d.IdcontaPessoal)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_conta_conta_pessoal");
-
-                entity.HasOne(d => d.IdmensagemSistemaNavigation)
-                    .WithMany(p => p.Conta)
-                    .HasForeignKey(d => d.IdmensagemSistema)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_conta_mensagem_sistema1");
             });
 
             modelBuilder.Entity<Endereco>(entity =>
@@ -828,7 +836,19 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("nome_tipo_endereco");
             });
 
-            modelBuilder.Entity<Uf>(new UfMapping().Configure);
+            modelBuilder.Entity<Uf>(entity =>
+            {
+                entity.ToTable("uf");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.NomeUf)
+                    .HasMaxLength(25)
+                    .HasColumnName("nome_uf");
+            });
 
             OnModelCreatingPartial(modelBuilder);
         }

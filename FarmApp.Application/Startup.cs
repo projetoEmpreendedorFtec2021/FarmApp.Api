@@ -1,4 +1,6 @@
 using FarmApp.Domain.Interfaces;
+using FarmApp.Domain.Interfaces.Repositories;
+using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Infra.Data.Context;
 using FarmApp.Infra.Data.Repository;
 using FarmApp.Service;
@@ -27,7 +29,6 @@ namespace FarmApp.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient(_ => new MySqlConnection(Configuration["ConnectionStrings:Default"]));
             services.AddDbContext<Db_FarmAppContext>(options =>
             {
                 var connection = Configuration["ConnectionStrings:Default"];
@@ -38,7 +39,10 @@ namespace FarmApp.Application
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(ILoginService), typeof(LoginService));
             services.AddTransient(typeof(IClienteRepository), typeof(ClienteRepository));
-            services.AddControllers();
+            services.AddTransient(typeof(IClienteService), typeof(ClienteService));
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             services

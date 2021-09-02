@@ -1,4 +1,4 @@
-﻿using FarmApp.Domain.Interfaces;
+﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Models;
 using FarmApp.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;

@@ -3,7 +3,7 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FarmApp.Domain.Interfaces
+namespace FarmApp.Domain.Interfaces.Services
 {
     public interface IBaseService<TEntity> where TEntity : BaseModel
     {

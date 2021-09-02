@@ -1,8 +1,7 @@
-﻿using FarmApp.Domain.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace FarmApp.Domain.Interfaces
-{
+namespace FarmApp.Domain.Interfaces.Services 
+{ 
     public interface ILoginService
     {
         Task<string> GeraToken(string login, string senha);
