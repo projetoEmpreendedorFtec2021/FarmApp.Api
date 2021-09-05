@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FarmApp.Domain.Models.DTO
 {
@@ -11,7 +9,7 @@ namespace FarmApp.Domain.Models.DTO
         public string Senha { get; set; }
         public string RepeteSenha { get; set; }
         public string CPF { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
         public string Celular { get; set; }
         public string CEP { get; set; }
         public string Uf { get; set; }

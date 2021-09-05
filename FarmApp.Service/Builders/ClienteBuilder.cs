@@ -77,7 +77,7 @@ namespace FarmApp.Service.Builders
             return this;
         }
 
-        public ClienteBuilder SetDataNascimento(DateTime dataNascimento)
+        public ClienteBuilder SetDataNascimento(DateTime? dataNascimento)
         {
             if (dataNascimento != null)
             {
