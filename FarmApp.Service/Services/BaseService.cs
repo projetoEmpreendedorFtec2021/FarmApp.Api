@@ -1,5 +1,4 @@
-﻿using FarmApp.Domain.Interfaces;
-using FarmApp.Domain.Interfaces.Repositories;
+﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
 using FluentValidation;
@@ -24,16 +23,21 @@ namespace FarmApp.Service.Services
                 await _repository.InsertAsync(obj);
                 return obj;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
         public async Task DeleteAsync(int id) => await _repository.DeleteAsync(id);
 
         public async Task<IList<TEntity>> GetAllAsync() => await _repository.GetAllAsync();
+
+        public async Task<IList<TEntity>> GetAllPaginatedAsync<T>(T paginatedObject) where T : BaseModelPaginated
+        {
+           return await _repository.GetAllPaginatedAsync(paginatedObject);
+        }
 
         public async Task<TEntity> GetByIdAsync(int id) => await _repository.GetByIdAsync(id);
 

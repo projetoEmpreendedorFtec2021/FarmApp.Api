@@ -5,14 +5,13 @@ using System.Collections.Generic;
 
 namespace FarmApp.Domain.Models
 {
-    public partial class MensagemSistema
+    public partial class MensagemSistema : BaseModel
     {
         public MensagemSistema()
         {
             ContaMensagemSistemas = new HashSet<ContaMensagemSistema>();
         }
 
-        public int Id { get; set; }
         public int? Idmotivo { get; set; }
         public string Mensagdescricao { get; set; }
         public DateTime? Datahora { get; set; }

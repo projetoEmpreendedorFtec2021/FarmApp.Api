@@ -5,20 +5,17 @@ using System.Collections.Generic;
 
 namespace FarmApp.Domain.Models
 {
-    public partial class ContaPessoal
+    public partial class ContaPessoal : BaseModel
     {
         public ContaPessoal()
         {
             Conta = new HashSet<Conta>();
+            EnderecoContapessoals = new HashSet<EnderecoContapessoal>();
         }
 
-        public int Id { get; set; }
-        public sbyte? TemFarmacia { get; set; }
-        public string ContaFarmacia { get; set; }
-        public int IdenderecoContapessoal { get; set; }
-        public int IdtipoEndereco { get; set; }
+        public int? TemFarmacia { get; set; }
 
-        public virtual EnderecoContapessoal IdNavigation { get; set; }
         public virtual ICollection<Conta> Conta { get; set; }
+        public virtual ICollection<EnderecoContapessoal> EnderecoContapessoals { get; set; }
     }
 }

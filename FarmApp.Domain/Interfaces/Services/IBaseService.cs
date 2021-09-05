@@ -13,6 +13,8 @@ namespace FarmApp.Domain.Interfaces.Services
 
         Task<IList<TEntity>> GetAllAsync();
 
+        Task<IList<TEntity>> GetAllPaginatedAsync<T>(T paginatedObject) where T : BaseModelPaginated;
+
         Task<TEntity> GetByIdAsync(int id);
 
         Task<TEntity> UpdateAsync<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>;

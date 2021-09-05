@@ -1,5 +1,4 @@
-﻿
-using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models;
 using FluentValidation;
 
 namespace FarmApp.Service.Validators
@@ -8,9 +7,8 @@ namespace FarmApp.Service.Validators
     {
         public UfValidator()
         {
-            RuleFor(c => c.NomeUf)
-                 .NotEmpty().WithMessage("Por favor, insira o nome da UF")
-                 .NotNull().WithMessage("Por favor, insira o nome da UF");
+            RuleFor(x => x.NomeUf)
+                .NotEmpty().WithMessage("Insira o estado");
         }
     }
 }

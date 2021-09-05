@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
 namespace FarmApp.Domain.Models
 {
-    public partial class Conta
+    public partial class Conta : BaseModel
     {
         public Conta()
         {
@@ -13,7 +12,6 @@ namespace FarmApp.Domain.Models
             ContaMensagemSistemas = new HashSet<ContaMensagemSistema>();
         }
 
-        public int Id { get; set; }
         public string DataCriacao { get; set; }
         public string DataEncerramento { get; set; }
         public int IdcontaPessoal { get; set; }

@@ -1,7 +1,6 @@
-﻿using System;
-using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models;
+using FarmApp.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -23,7 +22,6 @@ namespace FarmApp.Infra.Data.Context
         public virtual DbSet<Cep> Ceps { get; set; }
         public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<ClienteConsentimento> ClienteConsentimentos { get; set; }
         public virtual DbSet<Consentimento> Consentimentos { get; set; }
         public virtual DbSet<ContaFarmacia> ContaFarmacia { get; set; }
         public virtual DbSet<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
@@ -73,173 +71,15 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao_apresentação");
             });
 
-            modelBuilder.Entity<Bairro>(entity =>
-            {
-                entity.ToTable("bairro");
+            modelBuilder.Entity<Bairro>(new BairroMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+            modelBuilder.Entity<Cep>(new CepMapping().Configure);
 
-                entity.Property(e => e.NomeBairro)
-                    .HasMaxLength(45)
-                    .HasColumnName("nome_bairro");
-            });
+            modelBuilder.Entity<Cidade>(new CidadeMapping().Configure);
 
-            modelBuilder.Entity<Cep>(entity =>
-            {
-                entity.ToTable("cep");
+            modelBuilder.Entity<Cliente>(new ClienteMapping().Configure);
 
-                entity.HasIndex(e => e.Idendereco, "fk_cep_endereco1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Idendereco)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idendereco");
-
-                entity.Property(e => e.NumeroCep)
-                    .HasMaxLength(12)
-                    .HasColumnName("numero_cep");
-
-                entity.HasOne(d => d.IdenderecoNavigation)
-                    .WithMany(p => p.Ceps)
-                    .HasForeignKey(d => d.Idendereco)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_cep_endereco1");
-            });
-
-            modelBuilder.Entity<Cidade>(entity =>
-            {
-                entity.ToTable("cidade");
-
-                entity.HasIndex(e => e.Iduf, "fk_cidade_uf1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Iduf)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("iduf");
-
-                entity.Property(e => e.NomeCidade)
-                    .HasMaxLength(100)
-                    .HasColumnName("nome_cidade");
-
-                entity.HasOne(d => d.IdufNavigation)
-                    .WithMany(p => p.Cidades)
-                    .HasForeignKey(d => d.Iduf)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_cidade_uf1");
-            });
-
-            modelBuilder.Entity<Cliente>(entity =>
-            {
-                entity.ToTable("cliente");
-
-                entity.HasIndex(e => e.Idconta, "fk_cliente_conta1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Celular)
-                    .HasMaxLength(15)
-                    .HasColumnName("celular");
-
-                entity.Property(e => e.Cpf)
-                    .HasMaxLength(20)
-                    .HasColumnName("cpf");
-
-                entity.Property(e => e.Idconta)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconta");
-
-                entity.Property(e => e.Login)
-                    .HasMaxLength(50)
-                    .HasColumnName("login");
-
-                entity.Property(e => e.Nome)
-                    .HasMaxLength(45)
-                    .HasColumnName("nome");
-
-                entity.Property(e => e.Senha)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("senha");
-
-                entity.HasOne(d => d.IdcontaNavigation)
-                    .WithMany(p => p.Clientes)
-                    .HasForeignKey(d => d.Idconta)
-                    .HasConstraintName("fk_cliente_conta1");
-            });
-
-            modelBuilder.Entity<ClienteConsentimento>(entity =>
-            {
-                entity.ToTable("cliente_consentimento");
-
-                entity.HasIndex(e => e.Idcliente, "fk_cliente1_idx");
-
-                entity.HasIndex(e => e.Idconsentimento, "fk_consentimento1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Data)
-                    .HasColumnType("datetime")
-                    .HasColumnName("data");
-
-                entity.Property(e => e.Idcliente)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcliente");
-
-                entity.Property(e => e.Idconsentimento)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconsentimento");
-
-                entity.HasOne(d => d.IdclienteNavigation)
-                    .WithMany(p => p.ClienteConsentimentos)
-                    .HasForeignKey(d => d.Idcliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_cliente1");
-
-                entity.HasOne(d => d.IdconsentimentoNavigation)
-                    .WithMany(p => p.ClienteConsentimentos)
-                    .HasForeignKey(d => d.Idconsentimento)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_consentimento1");
-            });
-
-            modelBuilder.Entity<Consentimento>(entity =>
-            {
-                entity.ToTable("consentimento");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Data)
-                    .HasColumnType("datetime")
-                    .HasColumnName("data");
-
-                entity.Property(e => e.Finalidade)
-                    .HasMaxLength(1000)
-                    .HasColumnName("finalidade");
-
-                entity.Property(e => e.Situacao)
-                    .HasMaxLength(20)
-                    .HasColumnName("situacao");
-            });
+            modelBuilder.Entity<Consentimento>(new ConsentimentoMapping().Configure);
 
             modelBuilder.Entity<ContaFarmacia>(entity =>
             {
@@ -249,7 +89,6 @@ namespace FarmApp.Infra.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Alvara)
@@ -317,7 +156,6 @@ namespace FarmApp.Infra.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Idconta)
@@ -341,167 +179,13 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_mensagem_sistema1");
             });
 
-            modelBuilder.Entity<ContaPessoal>(entity =>
-            {
-                entity.ToTable("conta_pessoal");
+            modelBuilder.Entity<ContaPessoal>(new ContaPessoalMapping().Configure);
 
-                entity.HasIndex(e => new { e.IdenderecoContapessoal, e.IdtipoEndereco }, "fk_conta_pessoal_endereco_contapessoal1_idx");
+            modelBuilder.Entity<Conta>(new ContaMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+            modelBuilder.Entity<Endereco>(new EnderecoMapping().Configure);
 
-                entity.Property(e => e.ContaFarmacia)
-                    .HasMaxLength(45)
-                    .HasColumnName("conta_farmacia");
-
-                entity.Property(e => e.IdenderecoContapessoal)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idendereco_contapessoal");
-
-                entity.Property(e => e.IdtipoEndereco)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idtipo_endereco");
-
-                entity.Property(e => e.TemFarmacia)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("tem_farmacia");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.ContaPessoals)
-                    .HasForeignKey(d => new { d.IdenderecoContapessoal, d.IdtipoEndereco })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_conta_pessoal_endereco_contapessoal1");
-            });
-
-            modelBuilder.Entity<Conta>(entity =>
-            {
-                entity.ToTable("conta");
-
-                entity.HasIndex(e => e.IdcontaFarmacia, "fk_conta_conta_farmacia1_idx");
-
-                entity.HasIndex(e => e.IdcontaPessoal, "fk_conta_conta_pessoal_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.DataCriacao)
-                    .HasMaxLength(45)
-                    .HasColumnName("data_criacao");
-
-                entity.Property(e => e.DataEncerramento)
-                    .HasMaxLength(45)
-                    .HasColumnName("data_encerramento");
-
-                entity.Property(e => e.IdcontaFarmacia)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconta_farmacia");
-
-                entity.Property(e => e.IdcontaPessoal)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconta_pessoal");
-
-                entity.HasOne(d => d.IdcontaFarmaciaNavigation)
-                    .WithMany(p => p.Conta)
-                    .HasForeignKey(d => d.IdcontaFarmacia)
-                    .HasConstraintName("fk_conta_conta_farmacia1");
-
-                entity.HasOne(d => d.IdcontaPessoalNavigation)
-                    .WithMany(p => p.Conta)
-                    .HasForeignKey(d => d.IdcontaPessoal)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_conta_conta_pessoal");
-            });
-
-            modelBuilder.Entity<Endereco>(entity =>
-            {
-                entity.ToTable("endereco");
-
-                entity.HasIndex(e => e.Idbairro, "fk_endereco_bairro1_idx");
-
-                entity.HasIndex(e => e.Idcidade, "fk_endereco_cidade1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Idbairro)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idbairro");
-
-                entity.Property(e => e.Idcidade)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcidade");
-
-                entity.Property(e => e.NomeEndereco)
-                    .HasMaxLength(45)
-                    .HasColumnName("nome_endereco");
-
-                entity.HasOne(d => d.IdbairroNavigation)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.Idbairro)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_endereco_bairro1");
-
-                entity.HasOne(d => d.IdcidadeNavigation)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.Idcidade)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_endereco_cidade1");
-            });
-
-            modelBuilder.Entity<EnderecoContapessoal>(entity =>
-            {
-                entity.HasKey(e => new { e.Id, e.IdtipoEndereco })
-                    .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-
-                entity.ToTable("endereco_contapessoal");
-
-                entity.HasIndex(e => e.Idcep, "fk_endereco_contapessoal_cep1_idx");
-
-                entity.HasIndex(e => e.IdtipoEndereco, "fk_endereco_contapessoal_tipo_endereco1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
-
-                entity.Property(e => e.IdtipoEndereco)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idtipo_endereco");
-
-                entity.Property(e => e.Complemento)
-                    .HasMaxLength(10)
-                    .HasColumnName("complemento");
-
-                entity.Property(e => e.Idcep)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcep");
-
-                entity.Property(e => e.LatLong)
-                    .HasMaxLength(16)
-                    .HasColumnName("lat_long");
-
-                entity.Property(e => e.Numero)
-                    .HasMaxLength(10)
-                    .HasColumnName("numero");
-
-                entity.HasOne(d => d.IdcepNavigation)
-                    .WithMany(p => p.EnderecoContapessoals)
-                    .HasForeignKey(d => d.Idcep)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_endereco_contapessoal_cep1");
-
-                entity.HasOne(d => d.IdtipoEnderecoNavigation)
-                    .WithMany(p => p.EnderecoContapessoals)
-                    .HasForeignKey(d => d.IdtipoEndereco)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_endereco_contapessoal_tipo_endereco1");
-            });
+            modelBuilder.Entity<EnderecoContapessoal>(new EnderecoContaPessoalMapping().Configure);
 
             modelBuilder.Entity<ItemCliente>(entity =>
             {
@@ -601,7 +285,6 @@ namespace FarmApp.Infra.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Datahora)
@@ -638,7 +321,6 @@ namespace FarmApp.Infra.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Descricao)
@@ -652,7 +334,6 @@ namespace FarmApp.Infra.Data.Context
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Descricao)
@@ -822,33 +503,9 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao_tipo_produto");
             });
 
-            modelBuilder.Entity<TipoEndereco>(entity =>
-            {
-                entity.ToTable("tipo_endereco");
+            modelBuilder.Entity<TipoEndereco>(new TipoEnderecoMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.NomeTipoEndereco)
-                    .HasMaxLength(45)
-                    .HasColumnName("nome_tipo_endereco");
-            });
-
-            modelBuilder.Entity<Uf>(entity =>
-            {
-                entity.ToTable("uf");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.NomeUf)
-                    .HasMaxLength(25)
-                    .HasColumnName("nome_uf");
-            });
+            modelBuilder.Entity<Uf>(new UfMapping().Configure);
 
             OnModelCreatingPartial(modelBuilder);
         }

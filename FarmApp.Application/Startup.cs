@@ -1,6 +1,6 @@
-using FarmApp.Domain.Interfaces;
 using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
+using FarmApp.Domain.Models;
 using FarmApp.Infra.Data.Context;
 using FarmApp.Infra.Data.Repository;
 using FarmApp.Service;
@@ -35,14 +35,41 @@ namespace FarmApp.Application
 
                 options.UseMySql(connection, ServerVersion.AutoDetect(connection));
             });
-            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(ILoginService), typeof(LoginService));
             services.AddTransient(typeof(IClienteRepository), typeof(ClienteRepository));
             services.AddTransient(typeof(IClienteService), typeof(ClienteService));
+            services.AddTransient(typeof(IEnderecoRepository), typeof(EnderecoRepository));
+            services.AddTransient(typeof(IEnderecoService), typeof(EnderecoService));
+            services.AddTransient(typeof(IUfRepository), typeof(UfRepository));
+            services.AddTransient(typeof(IUfService), typeof(UfService));
+            services.AddTransient(typeof(ICidadeRepository), typeof(CidadeRepository));
+            services.AddTransient(typeof(ICidadeService), typeof(CidadeService));
+            services.AddTransient(typeof(IBairroRepository), typeof(BairroRepository));
+            services.AddTransient(typeof(IBairroService), typeof(BairroService));
+            services.AddTransient(typeof(ICepRepository), typeof(CepRepository));
+            services.AddTransient(typeof(ICepService), typeof(CepService));
+            services.AddTransient(typeof(IContaPessoalRepository), typeof(ContaPessoalRepository));
+            services.AddTransient(typeof(IContaPessoalService), typeof(ContaPessoalService));
+            services.AddTransient(typeof(IContaRepository), typeof(ContaRepository));
+            services.AddTransient(typeof(IContaService), typeof(ContaService));
+            services.AddTransient(typeof(IEnderecoContaPessoalRepository), typeof(EnderecoContaPessoalRepository));
+            services.AddTransient(typeof(IEnderecoContaPessoalService), typeof(EnderecoContaPessoalService));
+            services.AddTransient(typeof(ITipoEnderecoRepository), typeof(TipoEnderecoRepository));
+            services.AddTransient(typeof(ITipoEnderecoService), typeof(TipoEnderecoService));
+            services.AddTransient(typeof(IMailService), typeof(MailService));
+            services.AddTransient(typeof(IConsentimentoService), typeof(ConsentimentoService));
+            services.AddTransient(typeof(IConsentimentoRepository), typeof(ConsentimentoRepository));
+
+
+
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             services

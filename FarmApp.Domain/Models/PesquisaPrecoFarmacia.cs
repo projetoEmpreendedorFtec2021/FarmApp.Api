@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace FarmApp.Domain.Models
 {
-    public partial class PesquisaPrecoFarmacia
+    public partial class PesquisaPrecoFarmacia : BaseModel
     {
-        public int Id { get; set; }
         public int Idpesquisa { get; set; }
         public int IditemFarmacia { get; set; }
 

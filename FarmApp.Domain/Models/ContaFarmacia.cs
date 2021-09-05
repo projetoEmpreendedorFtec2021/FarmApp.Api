@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
 namespace FarmApp.Domain.Models
 {
-    public partial class ContaFarmacia
+    public partial class ContaFarmacia : BaseModel
     {
         public ContaFarmacia()
         {
@@ -13,7 +12,6 @@ namespace FarmApp.Domain.Models
             ItemFarmacia = new HashSet<ItemFarmacia>();
         }
 
-        public int Id { get; set; }
         public string RazaoSocial { get; set; }
         public string Cnpj { get; set; }
         public string NomeFantasia { get; set; }

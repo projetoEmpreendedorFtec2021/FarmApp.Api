@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
 namespace FarmApp.Domain.Models
 {
-    public partial class Endereco
+    public partial class Endereco : BaseModel
     {
         public Endereco()
         {
             Ceps = new HashSet<Cep>();
         }
 
-        public int Id { get; set; }
         public string NomeEndereco { get; set; }
         public int Idcidade { get; set; }
         public int Idbairro { get; set; }

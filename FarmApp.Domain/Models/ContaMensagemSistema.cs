@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace FarmApp.Domain.Models
 {
-    public partial class ContaMensagemSistema
+    public partial class ContaMensagemSistema : BaseModel
     {
-        public int Id { get; set; }
         public int Idconta { get; set; }
         public int IdmensagemSistema { get; set; }
 

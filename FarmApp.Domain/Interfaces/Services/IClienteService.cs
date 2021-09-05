@@ -7,6 +7,6 @@ namespace FarmApp.Domain.Interfaces.Services
     public interface IClienteService: IBaseService<Cliente>
     {
         Task<bool> CadastraCliente(ClienteDTO cliente);
-        bool IsEmailCadastrado(string email);
+        Task<bool> VerificaEmail(int idCliente);
     }
 }

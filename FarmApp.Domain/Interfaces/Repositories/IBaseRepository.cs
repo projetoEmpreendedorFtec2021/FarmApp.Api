@@ -6,13 +6,15 @@ namespace FarmApp.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseModel
     {
-        Task InsertAsync(TEntity obj);
+        Task<int> InsertAsync(TEntity obj);
 
         Task UpdateAsync(TEntity obj);
 
         Task DeleteAsync(int id);
 
         Task<IList<TEntity>> GetAllAsync();
+
+        Task<IList<TEntity>> GetAllPaginatedAsync<T>(T paginatedObject) where T : BaseModelPaginated;
 
         Task<TEntity> GetByIdAsync(int id);
     }

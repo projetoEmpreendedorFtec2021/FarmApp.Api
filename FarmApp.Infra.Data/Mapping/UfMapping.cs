@@ -6,19 +6,15 @@ namespace FarmApp.Infra.Data.Mapping
 {
     internal class UfMapping : IEntityTypeConfiguration<Uf>
     {
-        public void Configure(EntityTypeBuilder<Uf> builder)
+        public void Configure(EntityTypeBuilder<Uf> entity)
         {
-            builder.HasKey(e => e.Id)
-                    .HasName("PRIMARY");
+            entity.ToTable("uf");
 
-            builder.ToTable("uf");
-
-            builder.Property(e => e.Id)
+            entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
-                .ValueGeneratedNever()
                 .HasColumnName("id");
 
-            builder.Property(e => e.NomeUf)
+            entity.Property(e => e.NomeUf)
                 .HasMaxLength(25)
                 .HasColumnName("nome_uf");
         }

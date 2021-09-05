@@ -9,7 +9,7 @@ namespace FarmApp.Domain.Models
     {
         public Cliente()
         {
-            ClienteConsentimentos = new HashSet<ClienteConsentimento>();
+            Consentimentos = new HashSet<Consentimento>();
             ItemClientes = new HashSet<ItemCliente>();
             PesquisaPrecos = new HashSet<PesquisaPreco>();
         }
@@ -20,9 +20,11 @@ namespace FarmApp.Domain.Models
         public string Senha { get; set; }
         public string Nome { get; set; }
         public int? Idconta { get; set; }
+        public DateTime? DataNascimento { get; set; }
+        public int? ValidaEmail { get; set; }
 
         public virtual Conta IdcontaNavigation { get; set; }
-        public virtual ICollection<ClienteConsentimento> ClienteConsentimentos { get; set; }
+        public virtual ICollection<Consentimento> Consentimentos { get; set; }
         public virtual ICollection<ItemCliente> ItemClientes { get; set; }
         public virtual ICollection<PesquisaPreco> PesquisaPrecos { get; set; }
     }
