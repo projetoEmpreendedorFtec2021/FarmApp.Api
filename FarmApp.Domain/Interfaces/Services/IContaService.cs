@@ -5,6 +5,6 @@ namespace FarmApp.Domain.Interfaces.Services
 {
     public interface IContaService : IBaseService<Conta>
     {
-        Task<int> GetIdContaAsync(int idContaPessoal);
+        Task<int> GetIdContaFromContaPessoalAsync(int idContaPessoal);
     }
 }

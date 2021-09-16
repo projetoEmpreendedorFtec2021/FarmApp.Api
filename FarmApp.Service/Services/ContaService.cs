@@ -16,7 +16,7 @@ namespace FarmApp.Service.Services
             _contaRepository = contaRepository;
         }
 
-        public async Task<int> GetIdContaAsync(int idContaPessoal)
+        public async Task<int> GetIdContaFromContaPessoalAsync(int idContaPessoal)
         {
             Conta conta = ContaBuilder
                 .Init()

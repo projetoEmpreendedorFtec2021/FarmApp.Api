@@ -13,15 +13,21 @@ namespace FarmApp.Service.Services
     public class LoginService : ILoginService
     {
         private readonly IClienteRepository _clienteRepository;
-        public LoginService(IClienteRepository clienteRepository)
+        private readonly IContaRepository _contaRepository;
+        private const int ValidaEmail = 1;
+        public LoginService(
+            IClienteRepository clienteRepository,
+            IContaRepository contaRepository)
         {
             _clienteRepository = clienteRepository;
+            _contaRepository = contaRepository;
         }
 
         public async Task<string> GeraToken(string login, string senha)
         {
             var cliente = await _clienteRepository.GetCliente(login, senha);
-            if (cliente != null)
+            var conta = await _contaRepository.GetByIdAsync(cliente.Idconta.Value);
+            if (cliente != null && conta != null)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -29,7 +35,10 @@ namespace FarmApp.Service.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, cliente.Nome.ToString())
+                        new Claim(type: "Nome", value: cliente.Nome),
+                        new Claim(type: "Email", value: cliente.Login),
+                        new Claim(type: "IdCliente", value: cliente.Id.ToString()),
+                        new Claim(type: "IdContaPessoal", value: conta.IdcontaPessoal.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddHours(2),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

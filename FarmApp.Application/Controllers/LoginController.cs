@@ -1,5 +1,5 @@
-﻿using FarmApp.Domain.Interfaces;
-using FarmApp.Domain.Interfaces.Services;
+﻿using FarmApp.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,6 +7,7 @@ namespace FarmApp.Application.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
     public class LoginController : ControllerBase
     {
         private readonly ILoginService _loginService;

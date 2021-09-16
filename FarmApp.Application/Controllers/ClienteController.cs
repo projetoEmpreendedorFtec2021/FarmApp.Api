@@ -1,5 +1,6 @@
 ﻿using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace FarmApp.Application.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CadastraCliente(ClienteDTO cliente)
         {
             try
@@ -32,6 +34,7 @@ namespace FarmApp.Application.Controllers
         }
 
         [HttpGet("VerificaEmail")]
+        [AllowAnonymous]
         public async Task<IActionResult> VerificaEmail(int idCliente)
         {
             try
