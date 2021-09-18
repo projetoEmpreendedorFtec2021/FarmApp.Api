@@ -20,10 +20,10 @@ namespace FarmApp.Application.Controllers
         public async Task<IActionResult> Authenticate([FromQuery] string login, 
             [FromQuery] string senha)
         {
-            var token = await _loginService.GeraToken(login, senha);
-            if(token == null)
+             (var token, var errorMessage) = await _loginService.GeraToken(login, senha);
+            if(token == string.Empty || token is null)
             {
-                return NotFound(new { Mensagem = "Usuário ou senha inválidos" });
+                return NotFound(new { errorMessage });
             }
             
             return Ok(new
