@@ -6,6 +6,7 @@ using FarmApp.Domain.Models.GoogleMaps;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace FarmApp.Service.Services
         private readonly IBairroService _bairroService;
         private readonly ICepService _cepService;
         private readonly IEnderecoContaPessoalService _enderecoContaPessoalService;
+
+        private const int IdTipoEnderecoResidencia = 1;
+        private const int IdTipoEnderecoTrabalho = 2;
 
         private readonly HttpClient _httpClient;
 
@@ -135,6 +139,11 @@ namespace FarmApp.Service.Services
 
         public async Task<bool> AddEnderecoCompletoAsync(EnderecoLatLongDTO enderecoLatLong) 
         {
+            if (string.IsNullOrEmpty(enderecoLatLong.IdContaPessoal))
+            {
+                throw new ArgumentNullException(nameof(enderecoLatLong.IdContaPessoal));
+            }
+
             var endereco = await GetEnderecoFromLatLong(enderecoLatLong);
             var idUf = await _ufService.GetIdUfAsync(endereco.Uf);
             var idBairro = await _bairroService.GetIdBairroAsync(endereco.Bairro);
@@ -147,13 +156,13 @@ namespace FarmApp.Service.Services
                 idBairro);
 
             var idCep = await _cepService.GetIdCepAsync(endereco.CEP, idEndereco);
-
+            var idTipoEndereco = enderecoLatLong.IdTipoEndereco ? IdTipoEnderecoTrabalho : IdTipoEnderecoResidencia;
             var idEnderecoContaPessoal = await _enderecoContaPessoalService.GetIdEnderecoContaPessoalAsync(
-               enderecoLatLong.IdTipoEndereco,
+               idTipoEndereco,
                idCep,
                endereco.Numero,
                string.Empty,
-               enderecoLatLong.IdContaPessoal);
+               int.Parse(enderecoLatLong.IdContaPessoal));
 
             return idEnderecoContaPessoal != 0;
         }
