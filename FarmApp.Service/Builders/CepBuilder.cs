@@ -1,5 +1,4 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
 using System.Linq;
 
@@ -24,9 +23,10 @@ namespace FarmApp.Service.Builders
         public Cep Build() => _cep;
 
         public CepBuilder SetNumeroCep(string numeroCep)
-        { 
+        {
+            numeroCep = numeroCep.Trim().Replace("-", string.Empty);
             if(!string.IsNullOrEmpty(numeroCep) 
-                && numeroCep.Trim().Replace("-", string.Empty).Length == 8)
+                && numeroCep.Length == 8)
             {
                 _cep.NumeroCep = numeroCep;
             }

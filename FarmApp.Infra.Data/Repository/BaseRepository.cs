@@ -28,7 +28,14 @@ namespace FarmApp.Infra.Data.Repository
             var list = await _db_FarmAppContext.Set<TEntity>().ToListAsync();
             return list.Skip((paginatedObject.Pagina - 1) * paginatedObject.TamanhoPagina).Take(paginatedObject.TamanhoPagina).ToList();
         }
-        public async Task<TEntity> GetByIdAsync(int id) => await _db_FarmAppContext.Set<TEntity>().FindAsync(id);
+        public async Task<TEntity> GetByIdAsync(int? id) 
+        {
+            if (id.HasValue)
+            {
+                return await _db_FarmAppContext.Set<TEntity>().FindAsync(id);
+            }
+            return null;
+        } 
 
         public async Task<int> InsertAsync(TEntity obj)
         {

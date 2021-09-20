@@ -21,17 +21,24 @@ namespace FarmApp.Service.Services
 
         public async Task<int> GetIdCepAsync(string numeroCep, int idEndereco)
         {
+            var cep = await AddCepIfNotExists(numeroCep, idEndereco);
+            return cep.Id;
+        }
+
+        public async Task<Cep> AddCepIfNotExists(string numeroCep, int idEndereco)
+        {
             Cep cep = CepBuilder
-                .Init(_enderecoRepository)
-                .SetNumeroCep(numeroCep)
-                .SetIdEndereco(idEndereco)
-                .Build();
+               .Init(_enderecoRepository)
+               .SetNumeroCep(numeroCep)
+               .SetIdEndereco(idEndereco)
+               .Build();
             var cepExistente = await _cepRepository.CepExistsAsync(cep);
             if (cepExistente is null)
             {
                 cepExistente = await AddAsync<CepValidator>(cep);
             }
-            return cepExistente.Id;
+
+            return cepExistente;
         }
     }
 }

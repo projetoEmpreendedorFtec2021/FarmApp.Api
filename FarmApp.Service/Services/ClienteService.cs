@@ -65,7 +65,7 @@ namespace FarmApp.Service.Services
 
             var idContaPessoal = await _contaPessoalService.GetIdContaPessoalAsync();
 
-            var idConta = await _contaService.GetIdContaAsync(idContaPessoal);
+            var idConta = await _contaService.GetIdContaFromContaPessoalAsync(idContaPessoal);
             
             await _enderecoContaPessoalService.GetIdEnderecoContaPessoalAsync(
                 IdTipoEnderecoResidencial,
