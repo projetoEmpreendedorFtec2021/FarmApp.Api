@@ -57,19 +57,7 @@ namespace FarmApp.Infra.Data.Context
             modelBuilder.HasCharSet("utf8")
                 .UseCollation("utf8_general_ci");
 
-            modelBuilder.Entity<ApresentacaoProduto>(entity =>
-            {
-                entity.ToTable("apresentacao_produto");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.DescricaoApresentação)
-                    .HasMaxLength(30)
-                    .HasColumnName("descricao_apresentação");
-            });
+            modelBuilder.Entity<ApresentacaoProduto>(new ApresentacaoProdutoMapping().Configure);
 
             modelBuilder.Entity<Bairro>(new BairroMapping().Configure);
 
@@ -187,39 +175,7 @@ namespace FarmApp.Infra.Data.Context
 
             modelBuilder.Entity<EnderecoContapessoal>(new EnderecoContaPessoalMapping().Configure);
 
-            modelBuilder.Entity<ItemCliente>(entity =>
-            {
-                entity.ToTable("item_cliente");
-
-                entity.HasIndex(e => e.Idcliente, "fk_item_cliente_cliente1_idx");
-
-                entity.HasIndex(e => e.IdprodutoMarca, "fk_item_cliente_produto_marca1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Idcliente)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcliente");
-
-                entity.Property(e => e.IdprodutoMarca)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto_marca");
-
-                entity.HasOne(d => d.IdclienteNavigation)
-                    .WithMany(p => p.ItemClientes)
-                    .HasForeignKey(d => d.Idcliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_item_cliente_cliente1");
-
-                entity.HasOne(d => d.IdprodutoMarcaNavigation)
-                    .WithMany(p => p.ItemClientes)
-                    .HasForeignKey(d => d.IdprodutoMarca)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_item_cliente_produto_marca1");
-            });
+            modelBuilder.Entity<ItemCliente>(new ItemClienteMapping().Configure);
 
             modelBuilder.Entity<ItemFarmacia>(entity =>
             {
@@ -261,19 +217,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_item_farmacia_produto_marca1");
             });
 
-            modelBuilder.Entity<Marca>(entity =>
-            {
-                entity.ToTable("marca");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.NomeMarca)
-                    .HasMaxLength(50)
-                    .HasColumnName("nome_marca");
-            });
+            modelBuilder.Entity<Marca>(new MarcaMapping().Configure);
 
             modelBuilder.Entity<MensagemSistema>(entity =>
             {
@@ -413,95 +357,11 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_pesquisa_preco_farmacia_pesquisa_preco1");
             });
 
-            modelBuilder.Entity<Produto>(entity =>
-            {
-                entity.ToTable("produto");
+            modelBuilder.Entity<Produto>(new ProdutoMapping().Configure);
 
-                entity.HasIndex(e => e.IdprodutoTipo, "fk_produto_produto_tipo1_idx");
+            modelBuilder.Entity<ProdutoMarca>(new ProdutoMarcaMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.DescricaoProduto)
-                    .HasMaxLength(255)
-                    .HasColumnName("descricao_produto");
-
-                entity.Property(e => e.IdprodutoTipo)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto_tipo");
-
-                entity.HasOne(d => d.IdprodutoTipoNavigation)
-                    .WithMany(p => p.Produtos)
-                    .HasForeignKey(d => d.IdprodutoTipo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_produto_tipo1");
-            });
-
-            modelBuilder.Entity<ProdutoMarca>(entity =>
-            {
-                entity.ToTable("produto_marca");
-
-                entity.HasIndex(e => e.IdapresentacaoProduto, "fk_produto_marca_apresentacao_produto1_idx");
-
-                entity.HasIndex(e => e.Idmarca, "fk_produto_marca_marca1_idx");
-
-                entity.HasIndex(e => e.Idproduto, "fk_produto_marca_produto1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.CodigoProdutoMarca)
-                    .HasMaxLength(20)
-                    .HasColumnName("codigo_produto_marca");
-
-                entity.Property(e => e.IdapresentacaoProduto)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idapresentacao_produto");
-
-                entity.Property(e => e.Idmarca)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idmarca");
-
-                entity.Property(e => e.Idproduto)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto");
-
-                entity.HasOne(d => d.IdapresentacaoProdutoNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.IdapresentacaoProduto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_apresentacao_produto1");
-
-                entity.HasOne(d => d.IdmarcaNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.Idmarca)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_marca1");
-
-                entity.HasOne(d => d.IdprodutoNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.Idproduto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_produto1");
-            });
-
-            modelBuilder.Entity<ProdutoTipo>(entity =>
-            {
-                entity.ToTable("produto_tipo");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.DescricaoTipoProduto)
-                    .HasMaxLength(45)
-                    .HasColumnName("descricao_tipo_produto");
-            });
+            modelBuilder.Entity<ProdutoTipo>(new ProdutoTipoMapping().Configure);
 
             modelBuilder.Entity<TipoEndereco>(new TipoEnderecoMapping().Configure);
 

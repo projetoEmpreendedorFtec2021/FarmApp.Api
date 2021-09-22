@@ -63,8 +63,18 @@ namespace FarmApp.Application
             services.AddTransient(typeof(IMailService), typeof(MailService));
             services.AddTransient(typeof(IConsentimentoService), typeof(ConsentimentoService));
             services.AddTransient(typeof(IConsentimentoRepository), typeof(ConsentimentoRepository));
-
-
+            services.AddTransient(typeof(IProdutoTipoRepository), typeof(ProdutoTipoRepository));
+            services.AddTransient(typeof(IProdutoTipoService), typeof(ProdutoTipoService));
+            services.AddTransient(typeof(IMarcaRepository), typeof(MarcaRepository));
+            services.AddTransient(typeof(IMarcaService), typeof(MarcaService));
+            services.AddTransient(typeof(IApresentacaoProdutoRepository), typeof(ApresentacaoProdutoRepository));
+            services.AddTransient(typeof(IApresentacaoProdutoService), typeof(ApresentacaoProdutoService));
+            services.AddTransient(typeof(IProdutoRepository), typeof(ProdutoRepository));
+            services.AddTransient(typeof(IProdutoService), typeof(ProdutoService));
+            services.AddTransient(typeof(IProdutoMarcaRepository), typeof(ProdutoMarcaRepository));
+            services.AddTransient(typeof(IProdutoMarcaService), typeof(ProdutoMarcaService));
+            services.AddTransient(typeof(IItemClienteRepository), typeof(ItemClienteRepository));
+            services.AddTransient(typeof(IItemClienteService), typeof(ItemClienteService));
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

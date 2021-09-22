@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace FarmApp.Domain.Models
 {
-    public partial class ApresentacaoProduto
+    public partial class ApresentacaoProduto : BaseModel
+
     {
         public ApresentacaoProduto()
         {
             ProdutoMarcas = new HashSet<ProdutoMarca>();
         }
 
-        public int Id { get; set; }
         public string DescricaoApresentação { get; set; }
 
         public virtual ICollection<ProdutoMarca> ProdutoMarcas { get; set; }
