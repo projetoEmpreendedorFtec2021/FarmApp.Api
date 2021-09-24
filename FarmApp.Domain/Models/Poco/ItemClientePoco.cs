@@ -11,11 +11,11 @@ namespace FarmApp.Domain.Models.Poco
             PesquisaPrecos = new HashSet<PesquisaPrecoPoco>();
         }
 
-        public int Idcliente { get; set; }
-        public int IdprodutoMarca { get; set; }
+        public int IdCliente { get; set; }
+        public int IdProdutoMarca { get; set; }
 
-        public virtual ClientePoco IdclienteNavigation { get; set; }
-        public virtual ProdutoMarcaPoco IdprodutoMarcaNavigation { get; set; }
+        public virtual ClientePoco Cliente { get; set; }
+        public virtual ProdutoMarcaPoco ProdutoMarca { get; set; }
         public virtual ICollection<PesquisaPrecoPoco> PesquisaPrecos { get; set; }
     }
 }

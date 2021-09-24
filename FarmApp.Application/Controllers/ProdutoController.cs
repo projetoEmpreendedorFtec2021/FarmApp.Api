@@ -1,6 +1,6 @@
-﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Interfaces.Services;
+﻿using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ namespace FarmApp.Application.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoMarcaService _produtoMarcaService;

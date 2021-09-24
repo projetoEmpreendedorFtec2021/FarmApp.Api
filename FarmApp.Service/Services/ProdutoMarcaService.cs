@@ -5,6 +5,7 @@ using FarmApp.Domain.Models;
 using FarmApp.Domain.Models.DTO;
 using FarmApp.Domain.Models.Poco;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,30 +34,36 @@ namespace FarmApp.Service.Services
             _produtoTipoService = produtoTipoService;
             _mapper = mapper;
         }
-        public async Task<ProdutoMarcaDTO> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO)
+        public async Task<IList<ProdutoMarca>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO)
         {
-            var produtoMarcaDTO = new ProdutoMarcaDTO();
-            var produtosPoco = await GetAllPaginatedAsync(produtoDTO);
+            var produtosMarca = new List<ProdutoMarca>();
+            var produtosPoco = await GetAllAsync();
             foreach (var produtoPoco in produtosPoco)
             {
                 await MontaProdutoMarca(produtoPoco);
-                produtoMarcaDTO.Itens.Add(_mapper.Map<ProdutoMarca>(produtoPoco));
+                produtosMarca.Add(_mapper.Map<ProdutoMarca>(produtoPoco));
             }
-            produtoMarcaDTO.Itens = produtoMarcaDTO.Itens.Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto).ToList();
+            produtosMarca = produtosMarca
+                .Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto)
+                .ToList();
             if (!string.IsNullOrEmpty(produtoDTO.Busca))
             {
-                produtoMarcaDTO.Itens = produtoMarcaDTO.Itens
-                    .Where(x => x.ApresentacaoProduto.DescricaoApresentação.ToLower().Trim().Contains(produtoDTO.Busca.ToLower().Trim())).ToList();
+                produtosMarca = produtosMarca
+                    .Where(x => x.ApresentacaoProduto.DescricaoApresentação
+                            .ToLower()
+                            .Trim()
+                            .Contains(produtoDTO.Busca.ToLower()
+                            .Trim()))
+                    .ToList();
             }
 
-            produtoMarcaDTO.Itens = produtoMarcaDTO.Itens.Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto).ToList();
-            produtoMarcaDTO.Total = produtoMarcaDTO.Itens.Count;
-            produtoMarcaDTO.Pagina = produtoDTO.Pagina;
-            produtoMarcaDTO.TamanhoPagina = produtoDTO.TamanhoPagina;
-            return produtoMarcaDTO;
+            produtosMarca = produtosMarca
+                .Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto)
+                .ToList();
+            return produtosMarca;
         }
 
-        private async Task MontaProdutoMarca(ProdutoMarcaPoco produtoPoco)
+        public async Task MontaProdutoMarca(ProdutoMarcaPoco produtoPoco)
         {
             produtoPoco.Marca = await _marcaService.GetByIdAsync(produtoPoco.Idmarca);
             produtoPoco.ApresentacaoProduto = await _apresentacaoProdutoService.GetByIdAsync(produtoPoco.IdapresentacaoProduto);

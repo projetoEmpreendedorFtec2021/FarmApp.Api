@@ -18,6 +18,7 @@ namespace FarmApp.Domain.Models.Mapper
             CreateMap<MarcaPoco, Marca>();
             CreateMap<ApresentacaoProdutoPoco, ApresentacaoProduto>();
             CreateMap<ProdutoMarcaPoco, ProdutoMarca>();
+            CreateMap<ItemClienteDTO, ItemClientePoco>();
         }
     }
 }
