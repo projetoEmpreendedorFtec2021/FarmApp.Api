@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 
 namespace FarmApp.Service.Builders
 {
     public class ContaPessoalBuilder
     {
-        private ContaPessoal _contaPessoal = new ContaPessoal();
+        private ContaPessoalPoco _contaPessoal = new ContaPessoalPoco();
 
         private ContaPessoalBuilder()
         {
@@ -15,7 +15,7 @@ namespace FarmApp.Service.Builders
             return new ContaPessoalBuilder();
         }
 
-        public ContaPessoal Build() => _contaPessoal;
+        public ContaPessoalPoco Build() => _contaPessoal;
 
         public ContaPessoalBuilder SetTemFarmacia(bool temFarmacia)
         {

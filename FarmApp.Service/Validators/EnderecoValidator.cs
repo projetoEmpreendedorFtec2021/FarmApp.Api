@@ -1,9 +1,9 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using FluentValidation;
 
 namespace FarmApp.Service.Validators
 {
-    public class EnderecoValidator : AbstractValidator<Endereco>
+    public class EnderecoValidator : AbstractValidator<EnderecoPoco>
     {
         public EnderecoValidator()
         {

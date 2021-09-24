@@ -1,19 +1,19 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class CepRepository : BaseRepository<Cep>, ICepRepository
+    public class CepRepository : BaseRepository<CepPoco>, ICepRepository
     {
         public CepRepository(Db_FarmAppContext db_farmAppContext) : base(db_farmAppContext)
         {
 
         }
 
-        public async Task<Cep> CepExistsAsync(Cep cep)
+        public async Task<CepPoco> CepExistsAsync(CepPoco cep)
         {
             if (cep is null)
             {

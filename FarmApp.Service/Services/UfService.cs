@@ -1,13 +1,14 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class UfService : BaseService<Uf>, IUfService
+    public class UfService : BaseService<UfPoco>, IUfService
     {
         private readonly IUfRepository _ufRepository;
         public UfService(IUfRepository ufRepository) : base(ufRepository)
@@ -17,7 +18,7 @@ namespace FarmApp.Service.Services
 
         public async Task<int> GetIdUfAsync(string nomeUf)
         {
-            Uf uf = UfBuilder
+            UfPoco uf = UfBuilder
                 .Init()
                 .SetNomeUf(nomeUf)
                 .Build();

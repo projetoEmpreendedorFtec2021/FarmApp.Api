@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ContaMapping : IEntityTypeConfiguration<Conta>
+    public class ContaMapping : IEntityTypeConfiguration<ContaPoco>
     {
-        public void Configure(EntityTypeBuilder<Conta> entity)
+        public void Configure(EntityTypeBuilder<ContaPoco> entity)
         {
             entity.ToTable("conta");
 

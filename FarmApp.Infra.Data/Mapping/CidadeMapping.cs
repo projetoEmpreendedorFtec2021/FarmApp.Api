@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    internal class CidadeMapping : IEntityTypeConfiguration<Cidade>
+    internal class CidadeMapping : IEntityTypeConfiguration<CidadePoco>
     {
-        public void Configure(EntityTypeBuilder<Cidade> entity)
+        public void Configure(EntityTypeBuilder<CidadePoco> entity)
         {
             entity.ToTable("cidade");
 

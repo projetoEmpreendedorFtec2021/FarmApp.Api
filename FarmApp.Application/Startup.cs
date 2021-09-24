@@ -1,6 +1,8 @@
+using AutoMapper;
 using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Mapper;
 using FarmApp.Infra.Data.Context;
 using FarmApp.Infra.Data.Repository;
 using FarmApp.Service;
@@ -36,6 +38,14 @@ namespace FarmApp.Application
 
                 options.UseMySql(connection, ServerVersion.AutoDetect(connection));
             });
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));

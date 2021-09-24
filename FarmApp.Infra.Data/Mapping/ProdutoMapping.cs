@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ProdutoMapping : IEntityTypeConfiguration<Produto>
+    public class ProdutoMapping : IEntityTypeConfiguration<ProdutoPoco>
     {
-        public void Configure(EntityTypeBuilder<Produto> entity)
+        public void Configure(EntityTypeBuilder<ProdutoPoco> entity)
         {
             entity.ToTable("produto");
 
@@ -25,7 +25,7 @@ namespace FarmApp.Infra.Data.Mapping
                 .HasColumnType("int(11)")
                 .HasColumnName("idproduto_tipo");
 
-            entity.HasOne(d => d.IdprodutoTipoNavigation)
+            entity.HasOne(d => d.ProdutoTipo)
                 .WithMany(p => p.Produtos)
                 .HasForeignKey(d => d.IdprodutoTipo)
                 .OnDelete(DeleteBehavior.ClientSetNull)

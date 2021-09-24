@@ -48,6 +48,8 @@ namespace FarmApp.Service.Services
             return obj;
         }
 
+        public async Task<int> GetCountAsync() => await _repository.CountAsync();
+
         private void Validate(TEntity obj, AbstractValidator<TEntity> validator)
         {
             if(obj == null)

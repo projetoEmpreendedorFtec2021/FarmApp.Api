@@ -1,4 +1,5 @@
 ﻿using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,31 +18,31 @@ namespace FarmApp.Infra.Data.Context
         {
         }
 
-        public virtual DbSet<ApresentacaoProduto> ApresentacaoProdutos { get; set; }
-        public virtual DbSet<Bairro> Bairros { get; set; }
-        public virtual DbSet<Cep> Ceps { get; set; }
-        public virtual DbSet<Cidade> Cidades { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Consentimento> Consentimentos { get; set; }
-        public virtual DbSet<ContaFarmacia> ContaFarmacia { get; set; }
-        public virtual DbSet<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
-        public virtual DbSet<ContaPessoal> ContaPessoals { get; set; }
-        public virtual DbSet<Conta> Conta { get; set; }
-        public virtual DbSet<Endereco> Enderecos { get; set; }
-        public virtual DbSet<EnderecoContapessoal> EnderecoContapessoals { get; set; }
-        public virtual DbSet<ItemCliente> ItemClientes { get; set; }
-        public virtual DbSet<ItemFarmacia> ItemFarmacia { get; set; }
-        public virtual DbSet<Marca> Marcas { get; set; }
-        public virtual DbSet<MensagemSistema> MensagemSistemas { get; set; }
-        public virtual DbSet<Midia> Midia { get; set; }
-        public virtual DbSet<Motivo> Motivos { get; set; }
-        public virtual DbSet<PesquisaPreco> PesquisaPrecos { get; set; }
+        public virtual DbSet<ApresentacaoProdutoPoco> ApresentacaoProdutos { get; set; }
+        public virtual DbSet<BairroPoco> Bairros { get; set; }
+        public virtual DbSet<CepPoco> Ceps { get; set; }
+        public virtual DbSet<CidadePoco> Cidades { get; set; }
+        public virtual DbSet<ClientePoco> Clientes { get; set; }
+        public virtual DbSet<ConsentimentoPoco> Consentimentos { get; set; }
+        public virtual DbSet<ContaFarmaciaPoco> ContaFarmacia { get; set; }
+        public virtual DbSet<ContaMensagemSistemaPoco> ContaMensagemSistemas { get; set; }
+        public virtual DbSet<ContaPessoalPoco> ContaPessoals { get; set; }
+        public virtual DbSet<ContaPoco> Conta { get; set; }
+        public virtual DbSet<EnderecoPoco> Enderecos { get; set; }
+        public virtual DbSet<EnderecoContapessoalPoco> EnderecoContapessoals { get; set; }
+        public virtual DbSet<ItemClientePoco> ItemClientes { get; set; }
+        public virtual DbSet<ItemFarmaciaPoco> ItemFarmacia { get; set; }
+        public virtual DbSet<MarcaPoco> Marcas { get; set; }
+        public virtual DbSet<MensagemSistemaPoco> MensagemSistemas { get; set; }
+        public virtual DbSet<MidiaPoco> Midia { get; set; }
+        public virtual DbSet<MotivoPoco> Motivos { get; set; }
+        public virtual DbSet<PesquisaPrecoPoco> PesquisaPrecos { get; set; }
         public virtual DbSet<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
-        public virtual DbSet<Produto> Produtos { get; set; }
-        public virtual DbSet<ProdutoMarca> ProdutoMarcas { get; set; }
-        public virtual DbSet<ProdutoTipo> ProdutoTipos { get; set; }
-        public virtual DbSet<TipoEndereco> TipoEnderecos { get; set; }
-        public virtual DbSet<Uf> Ufs { get; set; }
+        public virtual DbSet<ProdutoPoco> Produtos { get; set; }
+        public virtual DbSet<ProdutoMarcaPoco> ProdutoMarcas { get; set; }
+        public virtual DbSet<ProdutoTipoPoco> ProdutoTipos { get; set; }
+        public virtual DbSet<TipoEnderecoPoco> TipoEnderecos { get; set; }
+        public virtual DbSet<UfPoco> Ufs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,19 +58,19 @@ namespace FarmApp.Infra.Data.Context
             modelBuilder.HasCharSet("utf8")
                 .UseCollation("utf8_general_ci");
 
-            modelBuilder.Entity<ApresentacaoProduto>(new ApresentacaoProdutoMapping().Configure);
+            modelBuilder.Entity<ApresentacaoProdutoPoco>(new ApresentacaoProdutoMapping().Configure);
 
-            modelBuilder.Entity<Bairro>(new BairroMapping().Configure);
+            modelBuilder.Entity<BairroPoco>(new BairroMapping().Configure);
 
-            modelBuilder.Entity<Cep>(new CepMapping().Configure);
+            modelBuilder.Entity<CepPoco>(new CepMapping().Configure);
 
-            modelBuilder.Entity<Cidade>(new CidadeMapping().Configure);
+            modelBuilder.Entity<CidadePoco>(new CidadeMapping().Configure);
 
-            modelBuilder.Entity<Cliente>(new ClienteMapping().Configure);
+            modelBuilder.Entity<ClientePoco>(new ClienteMapping().Configure);
 
-            modelBuilder.Entity<Consentimento>(new ConsentimentoMapping().Configure);
+            modelBuilder.Entity<ConsentimentoPoco>(new ConsentimentoMapping().Configure);
 
-            modelBuilder.Entity<ContaFarmacia>(entity =>
+            modelBuilder.Entity<ContaFarmaciaPoco>(entity =>
             {
                 entity.ToTable("conta_farmacia");
 
@@ -134,7 +135,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_conta_farmacia_cep1");
             });
 
-            modelBuilder.Entity<ContaMensagemSistema>(entity =>
+            modelBuilder.Entity<ContaMensagemSistemaPoco>(entity =>
             {
                 entity.ToTable("conta_mensagem_sistema");
 
@@ -167,17 +168,17 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_mensagem_sistema1");
             });
 
-            modelBuilder.Entity<ContaPessoal>(new ContaPessoalMapping().Configure);
+            modelBuilder.Entity<ContaPessoalPoco>(new ContaPessoalMapping().Configure);
 
-            modelBuilder.Entity<Conta>(new ContaMapping().Configure);
+            modelBuilder.Entity<ContaPoco>(new ContaMapping().Configure);
 
-            modelBuilder.Entity<Endereco>(new EnderecoMapping().Configure);
+            modelBuilder.Entity<EnderecoPoco>(new EnderecoMapping().Configure);
 
-            modelBuilder.Entity<EnderecoContapessoal>(new EnderecoContaPessoalMapping().Configure);
+            modelBuilder.Entity<EnderecoContapessoalPoco>(new EnderecoContaPessoalMapping().Configure);
 
-            modelBuilder.Entity<ItemCliente>(new ItemClienteMapping().Configure);
+            modelBuilder.Entity<ItemClientePoco>(new ItemClienteMapping().Configure);
 
-            modelBuilder.Entity<ItemFarmacia>(entity =>
+            modelBuilder.Entity<ItemFarmaciaPoco>(entity =>
             {
                 entity.ToTable("item_farmacia");
 
@@ -217,9 +218,9 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_item_farmacia_produto_marca1");
             });
 
-            modelBuilder.Entity<Marca>(new MarcaMapping().Configure);
+            modelBuilder.Entity<MarcaPoco>(new MarcaMapping().Configure);
 
-            modelBuilder.Entity<MensagemSistema>(entity =>
+            modelBuilder.Entity<MensagemSistemaPoco>(entity =>
             {
                 entity.ToTable("mensagem_sistema");
 
@@ -259,7 +260,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_mensagem_sistema_motivo1");
             });
 
-            modelBuilder.Entity<Midia>(entity =>
+            modelBuilder.Entity<MidiaPoco>(entity =>
             {
                 entity.ToTable("midia");
 
@@ -272,7 +273,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao");
             });
 
-            modelBuilder.Entity<Motivo>(entity =>
+            modelBuilder.Entity<MotivoPoco>(entity =>
             {
                 entity.ToTable("motivo");
 
@@ -285,7 +286,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao");
             });
 
-            modelBuilder.Entity<PesquisaPreco>(entity =>
+            modelBuilder.Entity<PesquisaPrecoPoco>(entity =>
             {
                 entity.ToTable("pesquisa_preco");
 
@@ -357,15 +358,15 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_pesquisa_preco_farmacia_pesquisa_preco1");
             });
 
-            modelBuilder.Entity<Produto>(new ProdutoMapping().Configure);
+            modelBuilder.Entity<ProdutoPoco>(new ProdutoMapping().Configure);
 
-            modelBuilder.Entity<ProdutoMarca>(new ProdutoMarcaMapping().Configure);
+            modelBuilder.Entity<ProdutoMarcaPoco>(new ProdutoMarcaMapping().Configure);
 
-            modelBuilder.Entity<ProdutoTipo>(new ProdutoTipoMapping().Configure);
+            modelBuilder.Entity<ProdutoTipoPoco>(new ProdutoTipoMapping().Configure);
 
-            modelBuilder.Entity<TipoEndereco>(new TipoEnderecoMapping().Configure);
+            modelBuilder.Entity<TipoEnderecoPoco>(new TipoEnderecoMapping().Configure);
 
-            modelBuilder.Entity<Uf>(new UfMapping().Configure);
+            modelBuilder.Entity<UfPoco>(new UfMapping().Configure);
 
             OnModelCreatingPartial(modelBuilder);
         }

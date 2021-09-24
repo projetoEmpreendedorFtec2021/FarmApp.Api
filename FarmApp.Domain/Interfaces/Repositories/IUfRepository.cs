@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IUfRepository : IBaseRepository<Uf>
+    public interface IUfRepository : IBaseRepository<UfPoco>
     {
-        Task<Uf> GetUfByNomeAsync(string nome);
+        Task<UfPoco> GetUfByNomeAsync(string nome);
     }
 }

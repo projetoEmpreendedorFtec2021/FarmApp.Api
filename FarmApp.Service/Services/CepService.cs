@@ -1,13 +1,14 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class CepService : BaseService<Cep>, ICepService
+    public class CepService : BaseService<CepPoco>, ICepService
     {
         private readonly ICepRepository _cepRepository;
         private readonly IEnderecoRepository _enderecoRepository;
@@ -25,9 +26,9 @@ namespace FarmApp.Service.Services
             return cep.Id;
         }
 
-        public async Task<Cep> AddCepIfNotExists(string numeroCep, int idEndereco)
+        public async Task<CepPoco> AddCepIfNotExists(string numeroCep, int idEndereco)
         {
-            Cep cep = CepBuilder
+            CepPoco cep = CepBuilder
                .Init(_enderecoRepository)
                .SetNumeroCep(numeroCep)
                .SetIdEndereco(idEndereco)

@@ -1,12 +1,12 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System;
 
 namespace FarmApp.Service.Builders
 {
     public class EnderecoContaPessoalBuilder
     {
-        private readonly EnderecoContapessoal _endereco = new EnderecoContapessoal();
+        private readonly EnderecoContapessoalPoco _endereco = new EnderecoContapessoalPoco();
         private readonly ITipoEnderecoRepository _tipoEnderecoRepository;
         private readonly ICepRepository _cepRepository;
         private readonly IContaPessoalRepository _contaPessoalRepository;
@@ -29,7 +29,7 @@ namespace FarmApp.Service.Builders
             return new EnderecoContaPessoalBuilder(tipoEnderecoRepository, cepRepository, contaPessoalRepository);
         }
 
-        public EnderecoContapessoal Build() => _endereco;
+        public EnderecoContapessoalPoco Build() => _endereco;
 
         public EnderecoContaPessoalBuilder SetIdTipoEndereco(int idTipoEndereco)
         {

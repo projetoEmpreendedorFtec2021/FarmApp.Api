@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    internal class UfMapping : IEntityTypeConfiguration<Uf>
+    internal class UfMapping : IEntityTypeConfiguration<UfPoco>
     {
-        public void Configure(EntityTypeBuilder<Uf> entity)
+        public void Configure(EntityTypeBuilder<UfPoco> entity)
         {
             entity.ToTable("uf");
 

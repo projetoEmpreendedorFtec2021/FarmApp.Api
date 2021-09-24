@@ -1,9 +1,9 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using FluentValidation;
 
 namespace FarmApp.Service.Validators
 {
-    public class BairroValidator : AbstractValidator<Bairro>
+    public class BairroValidator : AbstractValidator<BairroPoco>
     {
         public BairroValidator()
         {

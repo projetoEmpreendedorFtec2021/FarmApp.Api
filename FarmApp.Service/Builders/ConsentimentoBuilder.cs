@@ -1,12 +1,12 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System;
 
 namespace FarmApp.Service.Builders
 {
     public class ConsentimentoBuilder
     {
-        private readonly Consentimento _consentimento = new Consentimento();
+        private readonly ConsentimentoPoco _consentimento = new ConsentimentoPoco();
         private readonly IClienteRepository _clienteRepository;
 
         private ConsentimentoBuilder(IClienteRepository clienteRepository)
@@ -19,7 +19,7 @@ namespace FarmApp.Service.Builders
             return new ConsentimentoBuilder(clienteRepository);
         }
 
-        public Consentimento Build() => _consentimento;
+        public ConsentimentoPoco Build() => _consentimento;
 
         public ConsentimentoBuilder SetFinalidade(string finalidade)
         {

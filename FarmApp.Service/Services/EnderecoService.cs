@@ -3,6 +3,7 @@ using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
 using FarmApp.Domain.Models.DTO;
 using FarmApp.Domain.Models.GoogleMaps;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ using ViaCep;
 
 namespace FarmApp.Service.Services
 {
-    public class EnderecoService : BaseService<Endereco>, IEnderecoService
+    public class EnderecoService : BaseService<EnderecoPoco>, IEnderecoService
     {
         private readonly IEnderecoRepository _enderecoRepository;
         private readonly ICidadeRepository _cidadeRepository;
@@ -91,7 +92,7 @@ namespace FarmApp.Service.Services
             return endereco.Id;
         }
 
-        public async Task<Endereco> AddEnderecoIfNotExistsAsync(string nomeEndereco, int idCidade, int idBairro)
+        public async Task<EnderecoPoco> AddEnderecoIfNotExistsAsync(string nomeEndereco, int idCidade, int idBairro)
         {
             var endereco = EnderecoBuilder
                .Init(_cidadeRepository, _bairroRepository)

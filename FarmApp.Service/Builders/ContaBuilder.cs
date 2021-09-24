@@ -1,13 +1,11 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FarmApp.Service.Builders
 {
     public class ContaBuilder
     {
-        private readonly Conta _conta = new Conta();
+        private readonly ContaPoco _conta = new ContaPoco();
 
         private ContaBuilder()
         {
@@ -19,7 +17,7 @@ namespace FarmApp.Service.Builders
             return new ContaBuilder();
         }
 
-        public Conta Build() => _conta;
+        public ContaPoco Build() => _conta;
 
         public ContaBuilder SetDataCriacao(DateTime dataCriacao)
         {

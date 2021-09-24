@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class MarcaMapping : IEntityTypeConfiguration<Marca>
+    public class MarcaMapping : IEntityTypeConfiguration<MarcaPoco>
     {
-        public void Configure(EntityTypeBuilder<Marca> entity)
+        public void Configure(EntityTypeBuilder<MarcaPoco> entity)
         {
             entity.ToTable("marca");
 

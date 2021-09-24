@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ProdutoMarcaMapping : IEntityTypeConfiguration<ProdutoMarca>
+    public class ProdutoMarcaMapping : IEntityTypeConfiguration<ProdutoMarcaPoco>
     {
-        public void Configure(EntityTypeBuilder<ProdutoMarca> entity)
+        public void Configure(EntityTypeBuilder<ProdutoMarcaPoco> entity)
         {
             entity.ToTable("produto_marca");
 
@@ -37,19 +37,19 @@ namespace FarmApp.Infra.Data.Mapping
                 .HasColumnType("int(11)")
                 .HasColumnName("idproduto");
 
-            entity.HasOne(d => d.IdapresentacaoProdutoNavigation)
+            entity.HasOne(d => d.ApresentacaoProduto)
                 .WithMany(p => p.ProdutoMarcas)
                 .HasForeignKey(d => d.IdapresentacaoProduto)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_produto_marca_apresentacao_produto1");
 
-            entity.HasOne(d => d.IdmarcaNavigation)
+            entity.HasOne(d => d.Marca)
                 .WithMany(p => p.ProdutoMarcas)
                 .HasForeignKey(d => d.Idmarca)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_produto_marca_marca1");
 
-            entity.HasOne(d => d.IdprodutoNavigation)
+            entity.HasOne(d => d.Produto)
                 .WithMany(p => p.ProdutoMarcas)
                 .HasForeignKey(d => d.Idproduto)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -2,11 +2,11 @@
 
 #nullable disable
 
-namespace FarmApp.Domain.Models
+namespace FarmApp.Domain.Models.Poco
 {
-    public partial class ItemFarmacia : BaseModel
+    public partial class ItemFarmaciaPoco : BaseModel
     {
-        public ItemFarmacia()
+        public ItemFarmaciaPoco()
         {
             PesquisaPrecoFarmacia = new HashSet<PesquisaPrecoFarmacia>();
         }
@@ -16,8 +16,8 @@ namespace FarmApp.Domain.Models
         public string CodigoItemFarmacia { get; set; }
         public double? Preco { get; set; }
 
-        public virtual ContaFarmacia IdcontaFarmaciaNavigation { get; set; }
-        public virtual ProdutoMarca IdprodutoMarcaNavigation { get; set; }
+        public virtual ContaFarmaciaPoco IdcontaFarmaciaNavigation { get; set; }
+        public virtual ProdutoMarcaPoco IdprodutoMarcaNavigation { get; set; }
         public virtual ICollection<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
     }
 }

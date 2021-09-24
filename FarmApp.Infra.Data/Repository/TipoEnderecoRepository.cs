@@ -1,19 +1,19 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class TipoEnderecoRepository : BaseRepository<TipoEndereco>, ITipoEnderecoRepository
+    public class TipoEnderecoRepository : BaseRepository<TipoEnderecoPoco>, ITipoEnderecoRepository
     {
         public TipoEnderecoRepository(Db_FarmAppContext db) : base(db)
         {
 
         }
 
-        public async Task<TipoEndereco> GetTipoEnderecoPorNomeAsync(string nome)
+        public async Task<TipoEnderecoPoco> GetTipoEnderecoPorNomeAsync(string nome)
         {
             var tiposEnderecos = await GetAllAsync();
 

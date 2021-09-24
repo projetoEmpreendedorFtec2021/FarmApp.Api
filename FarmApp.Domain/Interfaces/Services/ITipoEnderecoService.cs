@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Services
 {
-    public interface ITipoEnderecoService : IBaseService<TipoEndereco>
+    public interface ITipoEnderecoService : IBaseService<TipoEnderecoPoco>
     {
-        Task<TipoEndereco> GetTipoEnderecoByNomeAsync(string nome);
+        Task<TipoEnderecoPoco> GetTipoEnderecoByNomeAsync(string nome);
     }
 }

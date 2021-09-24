@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using FluentValidation;
 using System;
 
 namespace FarmApp.Service.Validators
 {
-    public class ConsentimentoValidator : AbstractValidator<Consentimento>
+    public class ConsentimentoValidator : AbstractValidator<ConsentimentoPoco>
     {
         public ConsentimentoValidator()
         {

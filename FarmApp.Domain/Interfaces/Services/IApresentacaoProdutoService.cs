@@ -1,8 +1,8 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 
 namespace FarmApp.Domain.Interfaces.Services
 {
-    public interface IApresentacaoProdutoService : IBaseService<ApresentacaoProduto>
+    public interface IApresentacaoProdutoService : IBaseService<ApresentacaoProdutoPoco>
     {
     }
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace FarmApp.Domain.Models
+namespace FarmApp.Domain.Models.Poco
 {
-    public partial class PesquisaPreco : BaseModel
+    public partial class PesquisaPrecoPoco : BaseModel
     {
-        public PesquisaPreco()
+        public PesquisaPrecoPoco()
         {
             PesquisaPrecoFarmacia = new HashSet<PesquisaPrecoFarmacia>();
         }
@@ -16,8 +16,8 @@ namespace FarmApp.Domain.Models
         public int IditemCliente { get; set; }
         public DateTime? DataHora { get; set; }
 
-        public virtual Cliente IdclienteNavigation { get; set; }
-        public virtual ItemCliente IditemClienteNavigation { get; set; }
+        public virtual ClientePoco IdclienteNavigation { get; set; }
+        public virtual ItemClientePoco IditemClienteNavigation { get; set; }
         public virtual ICollection<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
     }
 }

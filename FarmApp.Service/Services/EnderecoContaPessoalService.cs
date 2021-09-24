@@ -1,13 +1,13 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class EnderecoContaPessoalService : BaseService<EnderecoContapessoal>, IEnderecoContaPessoalService
+    public class EnderecoContaPessoalService : BaseService<EnderecoContapessoalPoco>, IEnderecoContaPessoalService
     {
         private readonly IEnderecoContaPessoalRepository _enderecoContaPessoalRepository;
         private readonly ITipoEnderecoRepository _tipoEnderecoRepository;
@@ -28,7 +28,7 @@ namespace FarmApp.Service.Services
 
         public async Task<int> GetIdEnderecoContaPessoalAsync(int idTipoEndereco, int idCep, string numero, string complemento, int idContaPessoal)
         {
-            EnderecoContapessoal enderecoContapessoal = EnderecoContaPessoalBuilder
+            EnderecoContapessoalPoco enderecoContapessoal = EnderecoContaPessoalBuilder
                 .Init(_tipoEnderecoRepository, _cepRepository, _contaPessoalRepository)
                 .SetIdTipoEndereco(idTipoEndereco)
                 .SetIdCep(idCep)

@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 
 namespace FarmApp.Service.Builders
 {
     public class UfBuilder
     {
-        private readonly Uf _uf = new Uf();
+        private readonly UfPoco _uf = new UfPoco();
 
         private UfBuilder()
         {
@@ -16,7 +16,7 @@ namespace FarmApp.Service.Builders
             return new UfBuilder();
         }
 
-        public Uf Build() => _uf;
+        public UfPoco Build() => _uf;
 
         public UfBuilder SetNomeUf(string nomeUf)
         {

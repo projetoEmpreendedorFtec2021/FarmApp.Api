@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ProdutoTipoMapping : IEntityTypeConfiguration<ProdutoTipo>
+    public class ProdutoTipoMapping : IEntityTypeConfiguration<ProdutoTipoPoco>
     {
-        public void Configure(EntityTypeBuilder<ProdutoTipo> entity)
+        public void Configure(EntityTypeBuilder<ProdutoTipoPoco> entity)
         {
             entity.ToTable("produto_tipo");
 

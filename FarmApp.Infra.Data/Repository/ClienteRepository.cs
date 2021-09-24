@@ -1,5 +1,5 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class ClienteRepository : BaseRepository<Cliente>, IClienteRepository
+    public class ClienteRepository : BaseRepository<ClientePoco>, IClienteRepository
     {
         private readonly Db_FarmAppContext _db_FarmAppContext;
         public ClienteRepository(Db_FarmAppContext db_FarmAppContext) : base(db_FarmAppContext)
@@ -15,7 +15,7 @@ namespace FarmApp.Infra.Data.Repository
             _db_FarmAppContext = db_FarmAppContext;
         }
 
-        public async Task<Cliente> GetCliente(string login, string senha)
+        public async Task<ClientePoco> GetCliente(string login, string senha)
         {
             try
             {
@@ -32,10 +32,10 @@ namespace FarmApp.Infra.Data.Repository
             
         }
 
-        public Cliente GetClientePorEmail(string email)
+        public ClientePoco GetClientePorEmail(string email)
         {
             var cliente = _db_FarmAppContext
-                .Set<Cliente>()
+                .Set<ClientePoco>()
                 .Where(x => x.Login == email)
                 .FirstOrDefault();
 

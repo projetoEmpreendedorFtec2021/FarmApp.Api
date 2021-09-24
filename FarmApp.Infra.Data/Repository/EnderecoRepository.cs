@@ -1,19 +1,19 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class EnderecoRepository : BaseRepository<Endereco>, IEnderecoRepository
+    public class EnderecoRepository : BaseRepository<EnderecoPoco>, IEnderecoRepository
     {
         public EnderecoRepository(Db_FarmAppContext db_FarmAppContext) : base(db_FarmAppContext)
         {
           
         }
 
-        public async Task<Endereco> EnderecoExistsAsync(Endereco endereco)
+        public async Task<EnderecoPoco> EnderecoExistsAsync(EnderecoPoco endereco)
         {
             var enderecos = await GetAllAsync();
 

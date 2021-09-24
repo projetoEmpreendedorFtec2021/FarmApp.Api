@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ItemClienteMapping : IEntityTypeConfiguration<ItemCliente>
+    public class ItemClienteMapping : IEntityTypeConfiguration<ItemClientePoco>
     {
-        public void Configure(EntityTypeBuilder<ItemCliente> entity)
+        public void Configure(EntityTypeBuilder<ItemClientePoco> entity)
         {
             entity.ToTable("item_cliente");
 

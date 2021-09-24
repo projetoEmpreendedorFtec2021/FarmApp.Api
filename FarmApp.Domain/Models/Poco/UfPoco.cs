@@ -1,8 +1,8 @@
 ﻿#nullable disable
 
-namespace FarmApp.Domain.Models
+namespace FarmApp.Domain.Models.Poco
 {
-    public partial class Uf : BaseModel
+    public partial class UfPoco : BaseModel
     {
         public string NomeUf { get; set; }
     }

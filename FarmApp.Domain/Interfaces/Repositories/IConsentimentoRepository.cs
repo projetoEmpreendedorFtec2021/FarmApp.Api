@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IConsentimentoRepository : IBaseRepository<Consentimento>
+    public interface IConsentimentoRepository : IBaseRepository<ConsentimentoPoco>
     {
-        Task<Consentimento> ConsentimentoExists(string finalidade, string situacao, int idCliente);
+        Task<ConsentimentoPoco> ConsentimentoExists(string finalidade, string situacao, int idCliente);
     }
 }

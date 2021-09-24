@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IEnderecoRepository : IBaseRepository<Endereco>
+    public interface IEnderecoRepository : IBaseRepository<EnderecoPoco>
     {
-        Task<Endereco> EnderecoExistsAsync(Endereco endereco);
+        Task<EnderecoPoco> EnderecoExistsAsync(EnderecoPoco endereco);
     }
 }

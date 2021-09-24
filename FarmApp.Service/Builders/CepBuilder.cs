@@ -1,12 +1,12 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System.Linq;
 
 namespace FarmApp.Service.Builders
 {
     public class CepBuilder
     {
-        private readonly Cep _cep = new Cep();
+        private readonly CepPoco _cep = new CepPoco();
         private readonly IEnderecoRepository _enderecoRepository;
         private CepBuilder(
             IEnderecoRepository enderecoRepository)
@@ -20,7 +20,7 @@ namespace FarmApp.Service.Builders
             return new CepBuilder(enderecoRepository);
         }
 
-        public Cep Build() => _cep;
+        public CepPoco Build() => _cep;
 
         public CepBuilder SetNumeroCep(string numeroCep)
         {

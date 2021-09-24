@@ -1,11 +1,11 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System;
 
 namespace FarmApp.Service.Builders
 {
     public class BairroBuilder
     {
-        private readonly Bairro _bairro = new Bairro();
+        private readonly BairroPoco _bairro = new BairroPoco();
 
         private BairroBuilder() { }
 
@@ -14,7 +14,7 @@ namespace FarmApp.Service.Builders
             return new BairroBuilder();
         }
 
-        public Bairro Build() => _bairro;
+        public BairroPoco Build() => _bairro;
 
         public BairroBuilder SetNomeBairro(string nomeBairro)
         {

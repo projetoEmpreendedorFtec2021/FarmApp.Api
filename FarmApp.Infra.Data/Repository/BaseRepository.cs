@@ -50,5 +50,11 @@ namespace FarmApp.Infra.Data.Repository
             _db_FarmAppContext.Entry(obj).State = EntityState.Modified;
             await _db_FarmAppContext.SaveChangesAsync();
         }
+
+        public async Task<int> CountAsync()
+        {
+            var objects = await GetAllAsync();
+            return objects.Count;
+        }
     }
 }

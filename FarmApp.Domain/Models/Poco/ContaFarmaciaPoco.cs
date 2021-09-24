@@ -2,14 +2,14 @@
 
 #nullable disable
 
-namespace FarmApp.Domain.Models
+namespace FarmApp.Domain.Models.Poco
 {
-    public partial class ContaFarmacia : BaseModel
+    public partial class ContaFarmaciaPoco : BaseModel
     {
-        public ContaFarmacia()
+        public ContaFarmaciaPoco()
         {
-            Conta = new HashSet<Conta>();
-            ItemFarmacia = new HashSet<ItemFarmacia>();
+            Conta = new HashSet<ContaPoco>();
+            ItemFarmacia = new HashSet<ItemFarmaciaPoco>();
         }
 
         public string RazaoSocial { get; set; }
@@ -25,8 +25,8 @@ namespace FarmApp.Domain.Models
         public string NumeroEndereçofarmacia { get; set; }
         public string LatilongFarmacia { get; set; }
 
-        public virtual Cep IdcepNavigation { get; set; }
-        public virtual ICollection<Conta> Conta { get; set; }
-        public virtual ICollection<ItemFarmacia> ItemFarmacia { get; set; }
+        public virtual CepPoco IdcepNavigation { get; set; }
+        public virtual ICollection<ContaPoco> Conta { get; set; }
+        public virtual ICollection<ItemFarmaciaPoco> ItemFarmacia { get; set; }
     }
 }

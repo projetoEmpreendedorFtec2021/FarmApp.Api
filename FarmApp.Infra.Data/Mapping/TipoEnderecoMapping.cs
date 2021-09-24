@@ -1,12 +1,13 @@
 ﻿using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class TipoEnderecoMapping : IEntityTypeConfiguration<TipoEndereco>
+    public class TipoEnderecoMapping : IEntityTypeConfiguration<TipoEnderecoPoco>
     {
-        public void Configure(EntityTypeBuilder<TipoEndereco> entity)
+        public void Configure(EntityTypeBuilder<TipoEnderecoPoco> entity)
         {
             entity.ToTable("tipo_endereco");
 
