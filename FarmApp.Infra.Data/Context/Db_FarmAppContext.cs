@@ -1,7 +1,8 @@
-﻿using FarmApp.Domain.Models;
+﻿using System;
 using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -37,7 +38,7 @@ namespace FarmApp.Infra.Data.Context
         public virtual DbSet<MidiaPoco> Midia { get; set; }
         public virtual DbSet<MotivoPoco> Motivos { get; set; }
         public virtual DbSet<PesquisaPrecoPoco> PesquisaPrecos { get; set; }
-        public virtual DbSet<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
+        public virtual DbSet<PesquisaPrecoFarmaciaPoco> PesquisaPrecoFarmacia { get; set; }
         public virtual DbSet<ProdutoPoco> Produtos { get; set; }
         public virtual DbSet<ProdutoMarcaPoco> ProdutoMarcas { get; set; }
         public virtual DbSet<ProdutoTipoPoco> ProdutoTipos { get; set; }
@@ -66,7 +67,54 @@ namespace FarmApp.Infra.Data.Context
 
             modelBuilder.Entity<CidadePoco>(new CidadeMapping().Configure);
 
-            modelBuilder.Entity<ClientePoco>(new ClienteMapping().Configure);
+            modelBuilder.Entity<ClientePoco>(entity =>
+            {
+                entity.ToTable("cliente");
+
+                entity.HasIndex(e => e.Idconta, "fk_cliente_conta1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Celular)
+                    .HasMaxLength(15)
+                    .HasColumnName("celular");
+
+                entity.Property(e => e.Cpf)
+                    .HasMaxLength(20)
+                    .HasColumnName("cpf");
+
+                entity.Property(e => e.DataNascimento)
+                    .HasColumnType("date")
+                    .HasColumnName("data_nascimento");
+
+                entity.Property(e => e.Idconta)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("idconta");
+
+                entity.Property(e => e.Login)
+                    .HasMaxLength(50)
+                    .HasColumnName("login");
+
+                entity.Property(e => e.Nome)
+                    .HasMaxLength(45)
+                    .HasColumnName("nome");
+
+                entity.Property(e => e.Senha)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("senha");
+
+                entity.Property(e => e.ValidaEmail)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("valida_email");
+
+                entity.HasOne(d => d.IdcontaNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.Idconta)
+                    .HasConstraintName("fk_cliente_conta1");
+            });
 
             modelBuilder.Entity<ConsentimentoPoco>(new ConsentimentoMapping().Configure);
 
@@ -324,7 +372,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_pesquisa_preco_item_cliente1");
             });
 
-            modelBuilder.Entity<PesquisaPrecoFarmacia>(entity =>
+            modelBuilder.Entity<PesquisaPrecoFarmaciaPoco>(entity =>
             {
                 entity.ToTable("pesquisa_preco_farmacia");
 

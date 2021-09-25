@@ -9,6 +9,6 @@ namespace FarmApp.Domain.Interfaces.Services
     public interface IItemClienteService : IBaseService<ItemClientePoco>
     {
         Task<bool> AddItensClienteAsync(ItemClienteDTO itemClienteDTO);
-        Task<IList<ProdutoMarca>> GetAllItensCliente(int idCliente);
+        Task<IList<ProdutoMarcaDTO>> GetAllItensCliente(int idCliente);
     }
 }

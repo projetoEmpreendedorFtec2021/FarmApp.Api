@@ -18,6 +18,12 @@ namespace FarmApp.Domain.Models.Mapper
             CreateMap<MarcaPoco, Marca>();
             CreateMap<ApresentacaoProdutoPoco, ApresentacaoProduto>();
             CreateMap<ProdutoMarcaPoco, ProdutoMarca>();
+            CreateMap<ProdutoMarca, ProdutoMarcaDTO>()
+                .ForMember(prd => prd.IdProdutoMarca,
+                map => map.MapFrom(src => src.Id))
+                .ForMember(prd => prd.Descricao,
+                map => 
+                map.MapFrom(src => $"{src.Produto.DescricaoProduto} {src.ApresentacaoProduto.DescricaoApresentação} - {src.Marca.NomeMarca}"));
             CreateMap<ItemClienteDTO, ItemClientePoco>();
         }
     }

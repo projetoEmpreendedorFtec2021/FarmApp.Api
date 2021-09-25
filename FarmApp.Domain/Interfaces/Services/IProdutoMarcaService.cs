@@ -8,7 +8,7 @@ namespace FarmApp.Domain.Interfaces.Services
 {
     public interface IProdutoMarcaService : IBaseService<ProdutoMarcaPoco>
     {
-        Task<IList<ProdutoMarca>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO);
+        Task<IList<ProdutoMarcaDTO>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO);
         Task MontaProdutoMarca(ProdutoMarcaPoco produtoPoco);
     }
 }

@@ -9,7 +9,7 @@ namespace FarmApp.Domain.Models.Poco
     {
         public PesquisaPrecoPoco()
         {
-            PesquisaPrecoFarmacia = new HashSet<PesquisaPrecoFarmacia>();
+            PesquisaPrecoFarmacia = new HashSet<PesquisaPrecoFarmaciaPoco>();
         }
 
         public int Idcliente { get; set; }
@@ -18,6 +18,6 @@ namespace FarmApp.Domain.Models.Poco
 
         public virtual ClientePoco IdclienteNavigation { get; set; }
         public virtual ItemClientePoco IditemClienteNavigation { get; set; }
-        public virtual ICollection<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
+        public virtual ICollection<PesquisaPrecoFarmaciaPoco> PesquisaPrecoFarmacia { get; set; }
     }
 }

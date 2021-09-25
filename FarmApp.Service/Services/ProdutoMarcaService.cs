@@ -34,32 +34,29 @@ namespace FarmApp.Service.Services
             _produtoTipoService = produtoTipoService;
             _mapper = mapper;
         }
-        public async Task<IList<ProdutoMarca>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO)
+        public async Task<IList<ProdutoMarcaDTO>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO)
         {
-            var produtosMarca = new List<ProdutoMarca>();
+            var produtosMarca = new List<ProdutoMarcaDTO>();
             var produtosPoco = await GetAllAsync();
-            foreach (var produtoPoco in produtosPoco)
+            foreach(var produtoPoco in produtosPoco)
             {
                 await MontaProdutoMarca(produtoPoco);
-                produtosMarca.Add(_mapper.Map<ProdutoMarca>(produtoPoco));
+                if(produtoPoco.Produto.IdprodutoTipo == produtoDTO.IdTipoProduto)
+                {
+                    var produtoMarca = _mapper.Map<ProdutoMarca>(produtoPoco);
+                    produtosMarca.Add(_mapper.Map<ProdutoMarcaDTO>(produtoMarca));
+                }
             }
-            produtosMarca = produtosMarca
-                .Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto)
-                .ToList();
             if (!string.IsNullOrEmpty(produtoDTO.Busca))
             {
                 produtosMarca = produtosMarca
-                    .Where(x => x.ApresentacaoProduto.DescricaoApresentação
+                    .Where(x => x.Descricao
                             .ToLower()
                             .Trim()
                             .Contains(produtoDTO.Busca.ToLower()
                             .Trim()))
                     .ToList();
             }
-
-            produtosMarca = produtosMarca
-                .Where(x => x.Produto.ProdutoTipo.Id == produtoDTO.IdTipoProduto)
-                .ToList();
             return produtosMarca;
         }
 

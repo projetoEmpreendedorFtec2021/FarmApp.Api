@@ -45,11 +45,11 @@ namespace FarmApp.Service.Services
             return addedAllItens;
         }
 
-        public async Task<IList<ProdutoMarca>> GetAllItensCliente(int idCliente)
+        public async Task<IList<ProdutoMarcaDTO>> GetAllItensCliente(int idCliente)
         {
             var listaClientePoco = await GetAllAsync();
             listaClientePoco = listaClientePoco.Where(x => x.IdCliente == idCliente).ToList();
-            var produtosPorCliente = new List<ProdutoMarca>();
+            var produtosPorCliente = new List<ProdutoMarcaDTO>();
             foreach(var listaCliente in listaClientePoco)
             {
                 var produtoMarcaPoco = await _produtoMarcaService.GetByIdAsync(listaCliente.IdProdutoMarca);
@@ -58,7 +58,8 @@ namespace FarmApp.Service.Services
                     throw new KeyNotFoundException(nameof(listaCliente.IdProdutoMarca));
                 }
                 await _produtoMarcaService.MontaProdutoMarca(produtoMarcaPoco);
-                produtosPorCliente.Add(_mapper.Map<ProdutoMarca>(produtoMarcaPoco));
+                var produtoMarca = _mapper.Map<ProdutoMarca>(produtoMarcaPoco);
+                produtosPorCliente.Add(_mapper.Map<ProdutoMarcaDTO>(produtoMarca));
             }
             return produtosPorCliente;
         }
