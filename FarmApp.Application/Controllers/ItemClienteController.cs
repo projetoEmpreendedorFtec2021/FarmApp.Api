@@ -19,7 +19,7 @@ namespace FarmApp.Application.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> AddItensCliente([FromQuery]ItemClienteDTO itenClienteDTO)
+        public async Task<IActionResult> AddItensCliente(ItemClienteDTO itenClienteDTO)
         {
             try
             {
