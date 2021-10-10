@@ -1,4 +1,6 @@
-﻿namespace FarmApp.Domain.Models
+﻿using System.Collections.Generic;
+
+namespace FarmApp.Domain.Models
 {
     public abstract class BaseModelPaginated
     {

@@ -1,6 +1,8 @@
+using AutoMapper;
 using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Mapper;
 using FarmApp.Infra.Data.Context;
 using FarmApp.Infra.Data.Repository;
 using FarmApp.Service;
@@ -37,6 +39,14 @@ namespace FarmApp.Application
                 options.UseMySql(connection, ServerVersion.AutoDetect(connection));
             });
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient(typeof(ILoginService), typeof(LoginService));
@@ -63,8 +73,18 @@ namespace FarmApp.Application
             services.AddTransient(typeof(IMailService), typeof(MailService));
             services.AddTransient(typeof(IConsentimentoService), typeof(ConsentimentoService));
             services.AddTransient(typeof(IConsentimentoRepository), typeof(ConsentimentoRepository));
-
-
+            services.AddTransient(typeof(IProdutoTipoRepository), typeof(ProdutoTipoRepository));
+            services.AddTransient(typeof(IProdutoTipoService), typeof(ProdutoTipoService));
+            services.AddTransient(typeof(IMarcaRepository), typeof(MarcaRepository));
+            services.AddTransient(typeof(IMarcaService), typeof(MarcaService));
+            services.AddTransient(typeof(IApresentacaoProdutoRepository), typeof(ApresentacaoProdutoRepository));
+            services.AddTransient(typeof(IApresentacaoProdutoService), typeof(ApresentacaoProdutoService));
+            services.AddTransient(typeof(IProdutoRepository), typeof(ProdutoRepository));
+            services.AddTransient(typeof(IProdutoService), typeof(ProdutoService));
+            services.AddTransient(typeof(IProdutoMarcaRepository), typeof(ProdutoMarcaRepository));
+            services.AddTransient(typeof(IProdutoMarcaService), typeof(ProdutoMarcaService));
+            services.AddTransient(typeof(IItemClienteRepository), typeof(ItemClienteRepository));
+            services.AddTransient(typeof(IItemClienteService), typeof(ItemClienteService));
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

@@ -1,8 +1,8 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IContaPessoalRepository : IBaseRepository<ContaPessoal>
+    public interface IContaPessoalRepository : IBaseRepository<ContaPessoalPoco>
     {
     }
 }

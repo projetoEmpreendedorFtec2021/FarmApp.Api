@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    internal class ClienteMapping : IEntityTypeConfiguration<Cliente>
+    internal class ClienteMapping : IEntityTypeConfiguration<ClientePoco>
     {
-        public void Configure(EntityTypeBuilder<Cliente> entity)
+        public void Configure(EntityTypeBuilder<ClientePoco> entity)
         {
             entity.ToTable("cliente");
 

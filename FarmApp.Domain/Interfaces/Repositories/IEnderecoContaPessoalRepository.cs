@@ -1,11 +1,11 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IEnderecoContaPessoalRepository : IBaseRepository<EnderecoContapessoal>
+    public interface IEnderecoContaPessoalRepository : IBaseRepository<EnderecoContapessoalPoco>
     {
-        Task<EnderecoContapessoal> EnderecoContaPessoalExists(
+        Task<EnderecoContapessoalPoco> EnderecoContaPessoalExists(
             int idTipoEndereco,
             int idCep,
             string numero,

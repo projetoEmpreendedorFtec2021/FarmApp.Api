@@ -1,15 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ContaPessoalMapping : IEntityTypeConfiguration<ContaPessoal>
+    public class ContaPessoalMapping : IEntityTypeConfiguration<ContaPessoalPoco>
     {
-        public void Configure(EntityTypeBuilder<ContaPessoal> entity)
+        public void Configure(EntityTypeBuilder<ContaPessoalPoco> entity)
         {
             entity.ToTable("conta_pessoal");
 

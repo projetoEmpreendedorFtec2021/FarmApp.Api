@@ -1,5 +1,5 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System;
 using System.Text.RegularExpressions;
 
@@ -7,7 +7,7 @@ namespace FarmApp.Service.Builders
 {
     public class ClienteBuilder
     {
-        private Cliente _cliente = new Cliente();
+        private ClientePoco _cliente = new ClientePoco();
         private readonly IClienteRepository _clienteRepository;
 
         private ClienteBuilder(
@@ -21,7 +21,7 @@ namespace FarmApp.Service.Builders
             return new ClienteBuilder(clienteRepository);
         }
 
-        public Cliente Build() => _cliente;
+        public ClientePoco Build() => _cliente;
 
         public ClienteBuilder SetNome(string nome)
         {
@@ -39,7 +39,7 @@ namespace FarmApp.Service.Builders
                 throw new ArgumentNullException("E-mail nulo");
             }
 
-            Cliente clienteExistente = _clienteRepository.GetClientePorEmail(email);
+            ClientePoco clienteExistente = _clienteRepository.GetClientePorEmail(email);
 
             if (clienteExistente != null)
             {

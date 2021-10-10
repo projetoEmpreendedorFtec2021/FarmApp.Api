@@ -1,14 +1,12 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FarmApp.Service.Builders
 {
     public class CidadeBuilder
     {
-        private readonly Cidade _cidade = new Cidade();
+        private readonly CidadePoco _cidade = new CidadePoco();
         private readonly IUfRepository _ufRepository;
         
         private CidadeBuilder(IUfRepository ufRepository)
@@ -21,7 +19,7 @@ namespace FarmApp.Service.Builders
             return new CidadeBuilder(ufRepository);
         }
 
-        public Cidade Build() => _cidade;
+        public CidadePoco Build() => _cidade;
 
         public CidadeBuilder SetNomeCidade(string nomeCidade)
         {

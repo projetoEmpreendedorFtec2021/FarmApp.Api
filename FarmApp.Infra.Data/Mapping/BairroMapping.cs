@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class BairroMapping : IEntityTypeConfiguration<Bairro>
+    public class BairroMapping : IEntityTypeConfiguration<BairroPoco>
     {
-        public void Configure(EntityTypeBuilder<Bairro> entity)
+        public void Configure(EntityTypeBuilder<BairroPoco> entity)
         {
             entity.ToTable("bairro");
 

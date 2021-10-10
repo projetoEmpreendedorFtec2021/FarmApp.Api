@@ -1,10 +1,10 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface ICepRepository : IBaseRepository<Cep>
+    public interface ICepRepository : IBaseRepository<CepPoco>
     {
-        Task<Cep> CepExistsAsync(Cep cep);
+        Task<CepPoco> CepExistsAsync(CepPoco cep);
     }
 }

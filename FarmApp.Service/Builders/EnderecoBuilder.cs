@@ -1,12 +1,12 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using System.Linq;
 
 namespace FarmApp.Service.Builders
 {
     public class EnderecoBuilder
     {
-        private Endereco _endereco = new Endereco();
+        private EnderecoPoco _endereco = new EnderecoPoco();
         private readonly ICidadeRepository _cidadeRepository;
         private readonly IBairroRepository _bairroRepository;
 
@@ -25,7 +25,7 @@ namespace FarmApp.Service.Builders
             return new EnderecoBuilder(cidadeRepository, bairroRepository);
         }
 
-        public Endereco Build() => _endereco;
+        public EnderecoPoco Build() => _endereco;
         public EnderecoBuilder SetNomeEndereco(string endereco)
         {
             if (!string.IsNullOrEmpty(endereco))

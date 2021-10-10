@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class CepMapping : IEntityTypeConfiguration<Cep>
+    public class CepMapping : IEntityTypeConfiguration<CepPoco>
     {
-        public void Configure(EntityTypeBuilder<Cep> entity)
+        public void Configure(EntityTypeBuilder<CepPoco> entity)
         {
             entity.ToTable("cep");
 

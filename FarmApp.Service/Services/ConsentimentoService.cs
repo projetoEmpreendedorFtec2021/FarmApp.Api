@@ -1,6 +1,6 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class ConsentimentoService : BaseService<Consentimento>, IConsentimentoService
+    public class ConsentimentoService : BaseService<ConsentimentoPoco>, IConsentimentoService
     {
         private readonly IClienteRepository _clienteRepository;
         private readonly IConsentimentoRepository _consentimentoRepository;
@@ -23,7 +23,7 @@ namespace FarmApp.Service.Services
 
         public async Task AddConsentimento(int idCliente, string situacao)
         {
-            Consentimento consentimento = ConsentimentoBuilder
+            var consentimento = ConsentimentoBuilder
                 .Init(_clienteRepository)
                 .SetFinalidade(Finalidade)
                 .SetSituacao(situacao)

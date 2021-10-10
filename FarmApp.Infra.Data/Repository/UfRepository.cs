@@ -1,19 +1,19 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class UfRepository : BaseRepository<Uf>, IUfRepository
+    public class UfRepository : BaseRepository<UfPoco>, IUfRepository
     {
         public UfRepository(Db_FarmAppContext db_FarmAppContext) : base(db_FarmAppContext)
         {
 
         }
 
-        public async Task<Uf> GetUfByNomeAsync(string nome)
+        public async Task<UfPoco> GetUfByNomeAsync(string nome)
         {
             var ufs = await GetAllAsync();
 

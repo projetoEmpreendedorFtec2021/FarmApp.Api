@@ -1,13 +1,13 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class BairroService : BaseService<Bairro>, IBairroService
+    public class BairroService : BaseService<BairroPoco>, IBairroService
     {
         private readonly IBairroRepository _bairroRepository;
         public BairroService(IBairroRepository bairroRepository) : base(bairroRepository)
@@ -17,7 +17,7 @@ namespace FarmApp.Service.Services
 
         public async Task<int> GetIdBairroAsync(string nomeBairro)
         {
-            Bairro bairro = BairroBuilder
+            BairroPoco bairro = BairroBuilder
                 .Init()
                 .SetNomeBairro(nomeBairro)
                 .Build();

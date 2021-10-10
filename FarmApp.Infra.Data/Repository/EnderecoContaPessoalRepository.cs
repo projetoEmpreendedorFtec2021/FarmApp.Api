@@ -1,19 +1,19 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Context;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FarmApp.Infra.Data.Repository
 {
-    public class EnderecoContaPessoalRepository : BaseRepository<EnderecoContapessoal>, IEnderecoContaPessoalRepository
+    public class EnderecoContaPessoalRepository : BaseRepository<EnderecoContapessoalPoco>, IEnderecoContaPessoalRepository
     {
         public EnderecoContaPessoalRepository(Db_FarmAppContext db) : base(db)
         {
 
         }
 
-        public async Task<EnderecoContapessoal> EnderecoContaPessoalExists(
+        public async Task<EnderecoContapessoalPoco> EnderecoContaPessoalExists(
             int idTipoEndereco, 
             int idCep, 
             string numero, 

@@ -17,5 +17,7 @@ namespace FarmApp.Domain.Interfaces.Repositories
         Task<IList<TEntity>> GetAllPaginatedAsync<T>(T paginatedObject) where T : BaseModelPaginated;
 
         Task<TEntity> GetByIdAsync(int? id);
+
+        Task<int> CountAsync();
     }
 }

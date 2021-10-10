@@ -1,6 +1,8 @@
-﻿using FarmApp.Domain.Models;
+﻿using System;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -17,31 +19,31 @@ namespace FarmApp.Infra.Data.Context
         {
         }
 
-        public virtual DbSet<ApresentacaoProduto> ApresentacaoProdutos { get; set; }
-        public virtual DbSet<Bairro> Bairros { get; set; }
-        public virtual DbSet<Cep> Ceps { get; set; }
-        public virtual DbSet<Cidade> Cidades { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Consentimento> Consentimentos { get; set; }
-        public virtual DbSet<ContaFarmacia> ContaFarmacia { get; set; }
-        public virtual DbSet<ContaMensagemSistema> ContaMensagemSistemas { get; set; }
-        public virtual DbSet<ContaPessoal> ContaPessoals { get; set; }
-        public virtual DbSet<Conta> Conta { get; set; }
-        public virtual DbSet<Endereco> Enderecos { get; set; }
-        public virtual DbSet<EnderecoContapessoal> EnderecoContapessoals { get; set; }
-        public virtual DbSet<ItemCliente> ItemClientes { get; set; }
-        public virtual DbSet<ItemFarmacia> ItemFarmacia { get; set; }
-        public virtual DbSet<Marca> Marcas { get; set; }
-        public virtual DbSet<MensagemSistema> MensagemSistemas { get; set; }
-        public virtual DbSet<Midia> Midia { get; set; }
-        public virtual DbSet<Motivo> Motivos { get; set; }
-        public virtual DbSet<PesquisaPreco> PesquisaPrecos { get; set; }
-        public virtual DbSet<PesquisaPrecoFarmacia> PesquisaPrecoFarmacia { get; set; }
-        public virtual DbSet<Produto> Produtos { get; set; }
-        public virtual DbSet<ProdutoMarca> ProdutoMarcas { get; set; }
-        public virtual DbSet<ProdutoTipo> ProdutoTipos { get; set; }
-        public virtual DbSet<TipoEndereco> TipoEnderecos { get; set; }
-        public virtual DbSet<Uf> Ufs { get; set; }
+        public virtual DbSet<ApresentacaoProdutoPoco> ApresentacaoProdutos { get; set; }
+        public virtual DbSet<BairroPoco> Bairros { get; set; }
+        public virtual DbSet<CepPoco> Ceps { get; set; }
+        public virtual DbSet<CidadePoco> Cidades { get; set; }
+        public virtual DbSet<ClientePoco> Clientes { get; set; }
+        public virtual DbSet<ConsentimentoPoco> Consentimentos { get; set; }
+        public virtual DbSet<ContaFarmaciaPoco> ContaFarmacia { get; set; }
+        public virtual DbSet<ContaMensagemSistemaPoco> ContaMensagemSistemas { get; set; }
+        public virtual DbSet<ContaPessoalPoco> ContaPessoals { get; set; }
+        public virtual DbSet<ContaPoco> Conta { get; set; }
+        public virtual DbSet<EnderecoPoco> Enderecos { get; set; }
+        public virtual DbSet<EnderecoContapessoalPoco> EnderecoContapessoals { get; set; }
+        public virtual DbSet<ItemClientePoco> ItemClientes { get; set; }
+        public virtual DbSet<ItemFarmaciaPoco> ItemFarmacia { get; set; }
+        public virtual DbSet<MarcaPoco> Marcas { get; set; }
+        public virtual DbSet<MensagemSistemaPoco> MensagemSistemas { get; set; }
+        public virtual DbSet<MidiaPoco> Midia { get; set; }
+        public virtual DbSet<MotivoPoco> Motivos { get; set; }
+        public virtual DbSet<PesquisaPrecoPoco> PesquisaPrecos { get; set; }
+        public virtual DbSet<PesquisaPrecoFarmaciaPoco> PesquisaPrecoFarmacia { get; set; }
+        public virtual DbSet<ProdutoPoco> Produtos { get; set; }
+        public virtual DbSet<ProdutoMarcaPoco> ProdutoMarcas { get; set; }
+        public virtual DbSet<ProdutoTipoPoco> ProdutoTipos { get; set; }
+        public virtual DbSet<TipoEnderecoPoco> TipoEnderecos { get; set; }
+        public virtual DbSet<UfPoco> Ufs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,31 +59,66 @@ namespace FarmApp.Infra.Data.Context
             modelBuilder.HasCharSet("utf8")
                 .UseCollation("utf8_general_ci");
 
-            modelBuilder.Entity<ApresentacaoProduto>(entity =>
+            modelBuilder.Entity<ApresentacaoProdutoPoco>(new ApresentacaoProdutoMapping().Configure);
+
+            modelBuilder.Entity<BairroPoco>(new BairroMapping().Configure);
+
+            modelBuilder.Entity<CepPoco>(new CepMapping().Configure);
+
+            modelBuilder.Entity<CidadePoco>(new CidadeMapping().Configure);
+
+            modelBuilder.Entity<ClientePoco>(entity =>
             {
-                entity.ToTable("apresentacao_produto");
+                entity.ToTable("cliente");
+
+                entity.HasIndex(e => e.Idconta, "fk_cliente_conta1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
-                entity.Property(e => e.DescricaoApresentação)
-                    .HasMaxLength(30)
-                    .HasColumnName("descricao_apresentação");
+                entity.Property(e => e.Celular)
+                    .HasMaxLength(15)
+                    .HasColumnName("celular");
+
+                entity.Property(e => e.Cpf)
+                    .HasMaxLength(20)
+                    .HasColumnName("cpf");
+
+                entity.Property(e => e.DataNascimento)
+                    .HasColumnType("date")
+                    .HasColumnName("data_nascimento");
+
+                entity.Property(e => e.Idconta)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("idconta");
+
+                entity.Property(e => e.Login)
+                    .HasMaxLength(50)
+                    .HasColumnName("login");
+
+                entity.Property(e => e.Nome)
+                    .HasMaxLength(45)
+                    .HasColumnName("nome");
+
+                entity.Property(e => e.Senha)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("senha");
+
+                entity.Property(e => e.ValidaEmail)
+                    .HasColumnType("tinyint(4)")
+                    .HasColumnName("valida_email");
+
+                entity.HasOne(d => d.IdcontaNavigation)
+                    .WithMany(p => p.Clientes)
+                    .HasForeignKey(d => d.Idconta)
+                    .HasConstraintName("fk_cliente_conta1");
             });
 
-            modelBuilder.Entity<Bairro>(new BairroMapping().Configure);
+            modelBuilder.Entity<ConsentimentoPoco>(new ConsentimentoMapping().Configure);
 
-            modelBuilder.Entity<Cep>(new CepMapping().Configure);
-
-            modelBuilder.Entity<Cidade>(new CidadeMapping().Configure);
-
-            modelBuilder.Entity<Cliente>(new ClienteMapping().Configure);
-
-            modelBuilder.Entity<Consentimento>(new ConsentimentoMapping().Configure);
-
-            modelBuilder.Entity<ContaFarmacia>(entity =>
+            modelBuilder.Entity<ContaFarmaciaPoco>(entity =>
             {
                 entity.ToTable("conta_farmacia");
 
@@ -146,7 +183,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_conta_farmacia_cep1");
             });
 
-            modelBuilder.Entity<ContaMensagemSistema>(entity =>
+            modelBuilder.Entity<ContaMensagemSistemaPoco>(entity =>
             {
                 entity.ToTable("conta_mensagem_sistema");
 
@@ -179,49 +216,17 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_mensagem_sistema1");
             });
 
-            modelBuilder.Entity<ContaPessoal>(new ContaPessoalMapping().Configure);
+            modelBuilder.Entity<ContaPessoalPoco>(new ContaPessoalMapping().Configure);
 
-            modelBuilder.Entity<Conta>(new ContaMapping().Configure);
+            modelBuilder.Entity<ContaPoco>(new ContaMapping().Configure);
 
-            modelBuilder.Entity<Endereco>(new EnderecoMapping().Configure);
+            modelBuilder.Entity<EnderecoPoco>(new EnderecoMapping().Configure);
 
-            modelBuilder.Entity<EnderecoContapessoal>(new EnderecoContaPessoalMapping().Configure);
+            modelBuilder.Entity<EnderecoContapessoalPoco>(new EnderecoContaPessoalMapping().Configure);
 
-            modelBuilder.Entity<ItemCliente>(entity =>
-            {
-                entity.ToTable("item_cliente");
+            modelBuilder.Entity<ItemClientePoco>(new ItemClienteMapping().Configure);
 
-                entity.HasIndex(e => e.Idcliente, "fk_item_cliente_cliente1_idx");
-
-                entity.HasIndex(e => e.IdprodutoMarca, "fk_item_cliente_produto_marca1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Idcliente)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcliente");
-
-                entity.Property(e => e.IdprodutoMarca)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto_marca");
-
-                entity.HasOne(d => d.IdclienteNavigation)
-                    .WithMany(p => p.ItemClientes)
-                    .HasForeignKey(d => d.Idcliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_item_cliente_cliente1");
-
-                entity.HasOne(d => d.IdprodutoMarcaNavigation)
-                    .WithMany(p => p.ItemClientes)
-                    .HasForeignKey(d => d.IdprodutoMarca)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_item_cliente_produto_marca1");
-            });
-
-            modelBuilder.Entity<ItemFarmacia>(entity =>
+            modelBuilder.Entity<ItemFarmaciaPoco>(entity =>
             {
                 entity.ToTable("item_farmacia");
 
@@ -261,21 +266,9 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_item_farmacia_produto_marca1");
             });
 
-            modelBuilder.Entity<Marca>(entity =>
-            {
-                entity.ToTable("marca");
+            modelBuilder.Entity<MarcaPoco>(new MarcaMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.NomeMarca)
-                    .HasMaxLength(50)
-                    .HasColumnName("nome_marca");
-            });
-
-            modelBuilder.Entity<MensagemSistema>(entity =>
+            modelBuilder.Entity<MensagemSistemaPoco>(entity =>
             {
                 entity.ToTable("mensagem_sistema");
 
@@ -315,7 +308,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_mensagem_sistema_motivo1");
             });
 
-            modelBuilder.Entity<Midia>(entity =>
+            modelBuilder.Entity<MidiaPoco>(entity =>
             {
                 entity.ToTable("midia");
 
@@ -328,7 +321,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao");
             });
 
-            modelBuilder.Entity<Motivo>(entity =>
+            modelBuilder.Entity<MotivoPoco>(entity =>
             {
                 entity.ToTable("motivo");
 
@@ -341,7 +334,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasColumnName("descricao");
             });
 
-            modelBuilder.Entity<PesquisaPreco>(entity =>
+            modelBuilder.Entity<PesquisaPrecoPoco>(entity =>
             {
                 entity.ToTable("pesquisa_preco");
 
@@ -379,7 +372,7 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_pesquisa_preco_item_cliente1");
             });
 
-            modelBuilder.Entity<PesquisaPrecoFarmacia>(entity =>
+            modelBuilder.Entity<PesquisaPrecoFarmaciaPoco>(entity =>
             {
                 entity.ToTable("pesquisa_preco_farmacia");
 
@@ -413,99 +406,15 @@ namespace FarmApp.Infra.Data.Context
                     .HasConstraintName("fk_pesquisa_preco_farmacia_pesquisa_preco1");
             });
 
-            modelBuilder.Entity<Produto>(entity =>
-            {
-                entity.ToTable("produto");
+            modelBuilder.Entity<ProdutoPoco>(new ProdutoMapping().Configure);
 
-                entity.HasIndex(e => e.IdprodutoTipo, "fk_produto_produto_tipo1_idx");
+            modelBuilder.Entity<ProdutoMarcaPoco>(new ProdutoMarcaMapping().Configure);
 
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+            modelBuilder.Entity<ProdutoTipoPoco>(new ProdutoTipoMapping().Configure);
 
-                entity.Property(e => e.DescricaoProduto)
-                    .HasMaxLength(255)
-                    .HasColumnName("descricao_produto");
+            modelBuilder.Entity<TipoEnderecoPoco>(new TipoEnderecoMapping().Configure);
 
-                entity.Property(e => e.IdprodutoTipo)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto_tipo");
-
-                entity.HasOne(d => d.IdprodutoTipoNavigation)
-                    .WithMany(p => p.Produtos)
-                    .HasForeignKey(d => d.IdprodutoTipo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_produto_tipo1");
-            });
-
-            modelBuilder.Entity<ProdutoMarca>(entity =>
-            {
-                entity.ToTable("produto_marca");
-
-                entity.HasIndex(e => e.IdapresentacaoProduto, "fk_produto_marca_apresentacao_produto1_idx");
-
-                entity.HasIndex(e => e.Idmarca, "fk_produto_marca_marca1_idx");
-
-                entity.HasIndex(e => e.Idproduto, "fk_produto_marca_produto1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.CodigoProdutoMarca)
-                    .HasMaxLength(20)
-                    .HasColumnName("codigo_produto_marca");
-
-                entity.Property(e => e.IdapresentacaoProduto)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idapresentacao_produto");
-
-                entity.Property(e => e.Idmarca)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idmarca");
-
-                entity.Property(e => e.Idproduto)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idproduto");
-
-                entity.HasOne(d => d.IdapresentacaoProdutoNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.IdapresentacaoProduto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_apresentacao_produto1");
-
-                entity.HasOne(d => d.IdmarcaNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.Idmarca)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_marca1");
-
-                entity.HasOne(d => d.IdprodutoNavigation)
-                    .WithMany(p => p.ProdutoMarcas)
-                    .HasForeignKey(d => d.Idproduto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_produto_marca_produto1");
-            });
-
-            modelBuilder.Entity<ProdutoTipo>(entity =>
-            {
-                entity.ToTable("produto_tipo");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.DescricaoTipoProduto)
-                    .HasMaxLength(45)
-                    .HasColumnName("descricao_tipo_produto");
-            });
-
-            modelBuilder.Entity<TipoEndereco>(new TipoEnderecoMapping().Configure);
-
-            modelBuilder.Entity<Uf>(new UfMapping().Configure);
+            modelBuilder.Entity<UfPoco>(new UfMapping().Configure);
 
             OnModelCreatingPartial(modelBuilder);
         }

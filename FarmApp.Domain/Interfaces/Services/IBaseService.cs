@@ -18,5 +18,7 @@ namespace FarmApp.Domain.Interfaces.Services
         Task<TEntity> GetByIdAsync(int id);
 
         Task<TEntity> UpdateAsync<TValidator>(TEntity obj) where TValidator : AbstractValidator<TEntity>;
+
+        Task<int> GetCountAsync();
     }
 }

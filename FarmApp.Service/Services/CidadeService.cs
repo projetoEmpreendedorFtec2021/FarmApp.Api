@@ -1,13 +1,13 @@
 ﻿using FarmApp.Domain.Interfaces.Repositories;
 using FarmApp.Domain.Interfaces.Services;
-using FarmApp.Domain.Models;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class CidadeService : BaseService<Cidade>, ICidadeService
+    public class CidadeService : BaseService<CidadePoco>, ICidadeService
     {
         private readonly IUfRepository _ufRepository;
         private readonly ICidadeRepository _cidadeRepository;
@@ -21,7 +21,7 @@ namespace FarmApp.Service.Services
 
         public async Task<int> GetIdCidadeAsync(string nomeCidade, int idUf)
         {
-            Cidade cidade = CidadeBuilder
+            CidadePoco cidade = CidadeBuilder
                 .Init(_ufRepository)
                 .SetNomeCidade(nomeCidade)
                 .SetIdUf(idUf)

@@ -2,13 +2,14 @@
 using FarmApp.Domain.Interfaces.Services;
 using FarmApp.Domain.Models;
 using FarmApp.Domain.Models.DTO;
+using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
 using System.Threading.Tasks;
 
 namespace FarmApp.Service.Services
 {
-    public class ClienteService : BaseService<Cliente>, IClienteService
+    public class ClienteService : BaseService<ClientePoco>, IClienteService
     {
         private readonly IClienteRepository _clienteRepository;
         private readonly IEnderecoService _enderecoService;

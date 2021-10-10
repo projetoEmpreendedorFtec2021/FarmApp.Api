@@ -1,14 +1,11 @@
-﻿using FarmApp.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FarmApp.Domain.Models.Poco;
 using System.Threading.Tasks;
 
 namespace FarmApp.Domain.Interfaces.Repositories
 {
-    public interface IClienteRepository: IBaseRepository<Cliente>
+    public interface IClienteRepository: IBaseRepository<ClientePoco>
     {
-        Task<Cliente> GetCliente(string login, string senha);
-        Cliente GetClientePorEmail(string email);
+        Task<ClientePoco> GetCliente(string login, string senha);
+        ClientePoco GetClientePorEmail(string email);
     }
 }

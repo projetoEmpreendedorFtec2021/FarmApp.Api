@@ -1,12 +1,12 @@
-﻿using FarmApp.Domain.Models;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FarmApp.Infra.Data.Mapping
 {
-    public class ConsentimentoMapping : IEntityTypeConfiguration<Consentimento>
+    public class ConsentimentoMapping : IEntityTypeConfiguration<ConsentimentoPoco>
     {
-        public void Configure(EntityTypeBuilder<Consentimento> entity)
+        public void Configure(EntityTypeBuilder<ConsentimentoPoco> entity)
         {
             entity.ToTable("consentimento");
 
