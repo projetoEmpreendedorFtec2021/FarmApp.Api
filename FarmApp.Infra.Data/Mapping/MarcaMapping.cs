@@ -12,11 +12,10 @@ namespace FarmApp.Infra.Data.Mapping
 
             entity.Property(e => e.Id)
                 .HasColumnType("int(11)")
-                .ValueGeneratedNever()
                 .HasColumnName("id");
 
             entity.Property(e => e.NomeMarca)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .HasColumnName("nome_marca");
         }
     }

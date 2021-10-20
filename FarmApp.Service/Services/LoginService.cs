@@ -27,33 +27,6 @@ namespace FarmApp.Service.Services
 
         public async Task<(string, string)> GeraToken(string login, string senha)
         {
-            //var cliente = await _clienteRepository.GetCliente(login, senha);
-
-            //if (cliente != null)
-            //{
-            //    var conta = await _contaRepository.GetByIdAsync(cliente.Idconta ?? null);
-            //    if(conta is null)
-            //    {
-            //        throw new ArgumentNullException(nameof(conta));
-            //    }
-            //    var tokenHandler = new JwtSecurityTokenHandler();
-            //    var key = Encoding.ASCII.GetBytes(Settings.Secret);
-            //    var tokenDescriptor = new SecurityTokenDescriptor
-            //    {
-            //        Subject = new ClaimsIdentity(new Claim[]
-            //        {
-            //        new Claim(type: "Nome", value: cliente.Nome),
-            //        new Claim(type: "Email", value: cliente.Login),
-            //        new Claim(type: "IdCliente", value: cliente.Id.ToString()),
-            //        new Claim(type: "IdContaPessoal", value: conta.IdcontaPessoal.ToString())
-            //        }),
-            //        Expires = DateTime.UtcNow.AddHours(2),
-            //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            //    };
-            //    var token = tokenHandler.CreateToken(tokenDescriptor);
-            //    return tokenHandler.WriteToken(token);
-            //}
-            //return null;
             var cliente = await _clienteRepository.GetCliente(login, senha);
 
             if (cliente is null)

@@ -12,10 +12,14 @@ namespace FarmApp.Application.Controllers
     public class ClienteController : ControllerBase
     {
         private readonly IClienteService _clienteService;
+        private readonly IContaFarmaciaService _contaFarmaciaService;
 
-        public ClienteController(IClienteService clienteService)
+        public ClienteController(
+            IClienteService clienteService,
+            IContaFarmaciaService contaFarmaciaService)
         {
             _clienteService = clienteService;
+            _contaFarmaciaService = contaFarmaciaService;
         }
 
         [HttpPost]
@@ -53,5 +57,19 @@ namespace FarmApp.Application.Controllers
             }
         }
 
+        [HttpPost("CadastraContaFarmacia")]
+        public async Task<IActionResult> CadastraContaFarmacia(ContaFarmaciaDTO contaFarmaciaDTO)
+        {
+            try
+            {
+                var cadastrouContaFarmacia = await _contaFarmaciaService.CadastraContaFarmaciaAsync(contaFarmaciaDTO);
+
+                return Ok(cadastrouContaFarmacia);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex });
+            }
+        }
     }
 }

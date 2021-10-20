@@ -1,8 +1,6 @@
-﻿using System;
-using FarmApp.Domain.Models.Poco;
+﻿using FarmApp.Domain.Models.Poco;
 using FarmApp.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -27,10 +25,10 @@ namespace FarmApp.Infra.Data.Context
         public virtual DbSet<ConsentimentoPoco> Consentimentos { get; set; }
         public virtual DbSet<ContaFarmaciaPoco> ContaFarmacia { get; set; }
         public virtual DbSet<ContaMensagemSistemaPoco> ContaMensagemSistemas { get; set; }
-        public virtual DbSet<ContaPessoalPoco> ContaPessoals { get; set; }
+        public virtual DbSet<ContaPessoalPoco> ContaPessoaiss { get; set; }
         public virtual DbSet<ContaPoco> Conta { get; set; }
         public virtual DbSet<EnderecoPoco> Enderecos { get; set; }
-        public virtual DbSet<EnderecoContapessoalPoco> EnderecoContapessoals { get; set; }
+        public virtual DbSet<EnderecoContapessoalPoco> EnderecoContaspessoaiss { get; set; }
         public virtual DbSet<ItemClientePoco> ItemClientes { get; set; }
         public virtual DbSet<ItemFarmaciaPoco> ItemFarmacia { get; set; }
         public virtual DbSet<MarcaPoco> Marcas { get; set; }
@@ -67,121 +65,11 @@ namespace FarmApp.Infra.Data.Context
 
             modelBuilder.Entity<CidadePoco>(new CidadeMapping().Configure);
 
-            modelBuilder.Entity<ClientePoco>(entity =>
-            {
-                entity.ToTable("cliente");
-
-                entity.HasIndex(e => e.Idconta, "fk_cliente_conta1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Celular)
-                    .HasMaxLength(15)
-                    .HasColumnName("celular");
-
-                entity.Property(e => e.Cpf)
-                    .HasMaxLength(20)
-                    .HasColumnName("cpf");
-
-                entity.Property(e => e.DataNascimento)
-                    .HasColumnType("date")
-                    .HasColumnName("data_nascimento");
-
-                entity.Property(e => e.Idconta)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idconta");
-
-                entity.Property(e => e.Login)
-                    .HasMaxLength(50)
-                    .HasColumnName("login");
-
-                entity.Property(e => e.Nome)
-                    .HasMaxLength(45)
-                    .HasColumnName("nome");
-
-                entity.Property(e => e.Senha)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("senha");
-
-                entity.Property(e => e.ValidaEmail)
-                    .HasColumnType("tinyint(4)")
-                    .HasColumnName("valida_email");
-
-                entity.HasOne(d => d.IdcontaNavigation)
-                    .WithMany(p => p.Clientes)
-                    .HasForeignKey(d => d.Idconta)
-                    .HasConstraintName("fk_cliente_conta1");
-            });
+            modelBuilder.Entity<ClientePoco>(new ClienteMapping().Configure);
 
             modelBuilder.Entity<ConsentimentoPoco>(new ConsentimentoMapping().Configure);
 
-            modelBuilder.Entity<ContaFarmaciaPoco>(entity =>
-            {
-                entity.ToTable("conta_farmacia");
-
-                entity.HasIndex(e => e.Idcep, "fk_conta_farmacia_cep1_idx");
-
-                entity.Property(e => e.Id)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Alvara)
-                    .HasMaxLength(20)
-                    .HasColumnName("alvara");
-
-                entity.Property(e => e.Celular)
-                    .HasMaxLength(15)
-                    .HasColumnName("celular");
-
-                entity.Property(e => e.Cnpj)
-                    .HasMaxLength(20)
-                    .HasColumnName("cnpj");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.Endereco)
-                    .HasMaxLength(200)
-                    .HasColumnName("endereco");
-
-                entity.Property(e => e.Idcep)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("idcep");
-
-                entity.Property(e => e.LatilongFarmacia)
-                    .HasMaxLength(16)
-                    .HasColumnName("latilong_farmacia");
-
-                entity.Property(e => e.NomeFantasia)
-                    .HasMaxLength(100)
-                    .HasColumnName("nome_fantasia");
-
-                entity.Property(e => e.NumeroEndereçofarmacia)
-                    .HasMaxLength(10)
-                    .HasColumnName("numero_endereçofarmacia");
-
-                entity.Property(e => e.RazaoSocial)
-                    .HasMaxLength(100)
-                    .HasColumnName("razao_social");
-
-                entity.Property(e => e.Site)
-                    .HasMaxLength(200)
-                    .HasColumnName("site");
-
-                entity.Property(e => e.Telefone)
-                    .HasMaxLength(15)
-                    .HasColumnName("telefone");
-
-                entity.HasOne(d => d.IdcepNavigation)
-                    .WithMany(p => p.ContaFarmacia)
-                    .HasForeignKey(d => d.Idcep)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_conta_farmacia_cep1");
-            });
+            modelBuilder.Entity<ContaFarmaciaPoco>(new ContaFarmaciaMapping().Configure);
 
             modelBuilder.Entity<ContaMensagemSistemaPoco>(entity =>
             {

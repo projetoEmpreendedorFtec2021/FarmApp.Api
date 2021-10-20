@@ -1,5 +1,4 @@
-﻿using FarmApp.Domain.Models.Poco;
-using System;
+﻿using System;
 
 #nullable disable
 

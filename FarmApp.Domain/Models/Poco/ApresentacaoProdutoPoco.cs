@@ -4,8 +4,7 @@
 
 namespace FarmApp.Domain.Models.Poco
 {
-    public partial class ApresentacaoProdutoPoco : BaseModel
-
+    public partial class ApresentacaoProdutoPoco : BaseModel  
     {
         public ApresentacaoProdutoPoco()
         {
