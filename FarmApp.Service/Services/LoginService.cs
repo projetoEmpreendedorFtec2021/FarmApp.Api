@@ -25,7 +25,7 @@ namespace FarmApp.Service.Services
             _consentimentoRepository = consentimentoRepository;
         }
 
-        public async Task<(string, string)> GeraToken(string login, string senha)
+        public async Task<(string, string)> GeraToken(string login, string senha, bool loginFarmacia = false)
         {
             var cliente = await _clienteRepository.GetCliente(login, senha);
 
@@ -40,11 +40,11 @@ namespace FarmApp.Service.Services
             }
 
             var consentimento = await _consentimentoRepository.ConsentimentoExists(
-                "Coleta de dados de identificação pessoal", 
-                "A", 
+                "Coleta de dados de identificação pessoal",
+                "A",
                 cliente.Id);
 
-            if(consentimento is null)
+            if (consentimento is null)
             {
                 return (string.Empty, "Termos de Consentimento não foram aceitos");
             }
@@ -53,6 +53,11 @@ namespace FarmApp.Service.Services
             if (conta is null)
             {
                 return (string.Empty, "Conta não cadastrada");
+            }
+
+            if (loginFarmacia && conta.IdcontaFarmacia is null)
+            {
+                return (string.Empty, "Usuário sem Conta Farmácia vinculada");
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -70,10 +75,10 @@ namespace FarmApp.Service.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-             var tokenString = tokenHandler.WriteToken(token);
+            var tokenString = tokenHandler.WriteToken(token);
 
             return (tokenString, string.Empty);
-            
+
 
         }
     }
