@@ -38,6 +38,7 @@ namespace FarmApp.Service.Services
         {
             var produtosMarca = new List<ProdutoMarcaDTO>();
             var produtosPoco = await GetAllAsync();
+            produtosPoco = produtosPoco.Take(10).ToList();
             foreach(var produtoPoco in produtosPoco)
             {
                 await MontaProdutoMarca(produtoPoco);

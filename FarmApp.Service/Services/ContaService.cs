@@ -32,5 +32,30 @@ namespace FarmApp.Service.Services
             }
             return contaExistente.Id;
         }
+
+        public async Task<bool> IncludeIdContaFarmaciaAsync(int idConta, int idContaFarmacia)
+        {
+            if(idConta == 0)
+            {
+                throw new ArgumentNullException(nameof(idConta));
+            }
+
+            if (idContaFarmacia == 0)
+            {
+                throw new ArgumentNullException(nameof(idContaFarmacia));
+            }
+
+            var conta = await GetByIdAsync(idConta);
+
+            if(conta == null)
+            {
+                throw new ArgumentNullException(nameof(conta));
+            }
+
+            conta.IdcontaFarmacia = idContaFarmacia;
+            await UpdateAsync<ContaValidator>(conta);
+
+            return conta.IdcontaFarmacia != 0;
+        }
     }
 }

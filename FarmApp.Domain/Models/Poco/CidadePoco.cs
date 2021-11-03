@@ -10,7 +10,7 @@ namespace FarmApp.Domain.Models.Poco
         {
             Enderecos = new HashSet<EnderecoPoco>();
         }
-
+   
         public string NomeCidade { get; set; }
         public int Iduf { get; set; }
 

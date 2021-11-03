@@ -85,7 +85,8 @@ namespace FarmApp.Application
             services.AddTransient(typeof(IProdutoMarcaService), typeof(ProdutoMarcaService));
             services.AddTransient(typeof(IItemClienteRepository), typeof(ItemClienteRepository));
             services.AddTransient(typeof(IItemClienteService), typeof(ItemClienteService));
-
+            services.AddTransient(typeof(IContaFarmaciaRepository), typeof(ContaFarmaciaRepository));
+            services.AddTransient(typeof(IContaFarmaciaService), typeof(ContaFarmaciaService));
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

@@ -1,5 +1,4 @@
-﻿using FarmApp.Domain.Models;
-using FarmApp.Domain.Models.Poco;
+﻿using FarmApp.Domain.Models.Poco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

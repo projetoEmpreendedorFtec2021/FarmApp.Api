@@ -13,7 +13,7 @@ namespace FarmApp.Domain.Models.Poco
             ItemClientes = new HashSet<ItemClientePoco>();
             PesquisaPrecos = new HashSet<PesquisaPrecoPoco>();
         }
-
+     
         public string Cpf { get; set; }
         public string Celular { get; set; }
         public string Login { get; set; }

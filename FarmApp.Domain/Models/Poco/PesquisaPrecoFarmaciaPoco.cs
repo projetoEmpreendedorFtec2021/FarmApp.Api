@@ -1,7 +1,5 @@
 ﻿#nullable disable
 
-using FarmApp.Domain.Models.Poco;
-
 namespace FarmApp.Domain.Models.Poco
 {
     public partial class PesquisaPrecoFarmaciaPoco : BaseModel
