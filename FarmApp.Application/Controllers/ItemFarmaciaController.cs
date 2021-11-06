@@ -1,4 +1,5 @@
 ﻿using FarmApp.Domain.Interfaces.Services;
+using FarmApp.Domain.Models;
 using FarmApp.Domain.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,20 @@ namespace FarmApp.Application.Controllers
                 return Ok(true);
             }
             catch(Exception ex)
+            {
+                return BadRequest(new { ex.Message, ex.InnerException });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProdutosMarcaItemFarmaciaAsync([FromQuery] ProdutoMarcaItemFarmaciaDTO produto)
+        {
+            try
+            {
+                IList<ProdutoMarcaItemFarmacia> itens = await _itemFarmaciaService.GetProdutosMarcaItemFarmaciaAsync(produto);
+                return Ok(itens);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { ex.Message, ex.InnerException });
             }
