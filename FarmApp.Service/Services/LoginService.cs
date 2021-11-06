@@ -68,12 +68,21 @@ namespace FarmApp.Service.Services
                 {
                     new Claim(type: "Nome", value: cliente.Nome),
                     new Claim(type: "Email", value: cliente.Login),
-                    new Claim(type: "IdCliente", value: cliente.Id.ToString()),
-                    new Claim(type: "IdContaPessoal", value: conta.IdcontaPessoal.ToString())
+                    new Claim(type: "IdCliente", value: cliente.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            if (conta.IdcontaFarmacia != 0)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(type: "IdContaFarmacia", value: conta.IdcontaFarmacia.ToString()));
+            }
+
+            if (conta.IdcontaPessoal != 0)
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(type: "IdContaPessoal", value: conta.IdcontaPessoal.ToString()));
+            }
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 

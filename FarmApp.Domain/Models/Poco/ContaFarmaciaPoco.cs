@@ -16,7 +16,6 @@ namespace FarmApp.Domain.Models.Poco
         public string Cnpj { get; set; }
         public string NomeFantasia { get; set; }
         public string Alvara { get; set; }
-        public string Endereco { get; set; }
         public string Site { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }

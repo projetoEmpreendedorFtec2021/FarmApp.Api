@@ -25,6 +25,9 @@ namespace FarmApp.Domain.Models.Mapper
                 map => 
                 map.MapFrom(src => $"{src.Produto.DescricaoProduto} {src.ApresentacaoProduto.DescricaoApresentação.Substring(0, src.ApresentacaoProduto.DescricaoApresentação.IndexOf(" "))}"));
             CreateMap<ItemClienteDTO, ItemClientePoco>();
+            CreateMap<ItemFarmaciaDTO, ItemFarmaciaPoco>()
+                .ForMember(itemFarmacia => itemFarmacia.Id,
+                map => map.MapFrom(src => src.IdItemFarmacia));
         }
     }
 }
