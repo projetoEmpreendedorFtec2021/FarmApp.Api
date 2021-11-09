@@ -35,10 +35,6 @@ namespace FarmApp.Infra.Data.Mapping
                 .HasMaxLength(50)
                 .HasColumnName("email");
 
-            entity.Property(e => e.Endereco)
-                .HasMaxLength(200)
-                .HasColumnName("endereco");
-
             entity.Property(e => e.Idcep)
                 .HasColumnType("int(11)")
                 .HasColumnName("idcep");
