@@ -21,7 +21,7 @@ namespace FarmApp.Domain.Models.Poco
         public string Telefone { get; set; }
         public string Celular { get; set; }
         public int Idcep { get; set; }
-        public string NumeroEndereçofarmacia { get; set; }
+        public string NumeroEnderecofarmacia { get; set; }
         public string LatilongFarmacia { get; set; }
 
         public virtual CepPoco IdcepNavigation { get; set; }

@@ -13,9 +13,13 @@ namespace FarmApp.Application.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoMarcaService _produtoMarcaService;
-        public ProdutoController(IProdutoMarcaService produtoMarcaService)
+        private readonly IPesquisaProdutoService _pesquisaProdutoService;
+        public ProdutoController(
+            IProdutoMarcaService produtoMarcaService,
+            IPesquisaProdutoService pesquisaProdutoService)
         {
             _produtoMarcaService = produtoMarcaService;
+            _pesquisaProdutoService = pesquisaProdutoService;
         }
 
         [HttpGet]
@@ -29,6 +33,20 @@ namespace FarmApp.Application.Controllers
             catch(Exception ex)
             {
                 return BadRequest(new { Message = ex });
+            }
+        }
+
+        [HttpGet("PesquisaProdutoPorPrecoOuDistancia")]
+        public async Task<IActionResult> PesquisaItemFarmaciaPorPrecoOuDistanciaAsync([FromQuery]PesquisaProdutoDTO pesquisaProduto)
+        {
+            try
+            {
+                var produtos = await _pesquisaProdutoService.GetPesquisaProdutoPorPrecoOuDistanciaAsync(pesquisaProduto);
+                return Ok(produtos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ex.Message, ex.InnerException });
             }
         }
     }

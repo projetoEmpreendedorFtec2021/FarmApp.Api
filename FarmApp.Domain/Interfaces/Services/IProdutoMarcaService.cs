@@ -10,5 +10,6 @@ namespace FarmApp.Domain.Interfaces.Services
     {
         Task<IList<ProdutoMarcaDTO>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO);
         Task MontaProdutoMarca(ProdutoMarcaPoco produtoPoco);
+        Task<IList<ProdutoMarcaDTO>> GetAllProdutosMarca();
     }
 }

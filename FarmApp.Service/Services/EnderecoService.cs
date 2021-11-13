@@ -116,8 +116,8 @@ namespace FarmApp.Service.Services
             string requestUri = string.Format(
                 "https://maps.googleapis.com/maps/api/geocode/json?latlng={0},{1}&key={2}&language=pt-BR", 
                 endereco.Latitude.ToString(CultureInfo.InvariantCulture ),
-                endereco.Longitude.ToString(CultureInfo.InvariantCulture), 
-                "AIzaSyCnoX0Yi40shoiYC55_mOgdtQIXhDh7PHY");
+                endereco.Longitude.ToString(CultureInfo.InvariantCulture),
+                "AIzaSyBkatcMzH8vTl8iFCdyCLU3eCIJe3pMenE");
 
             HttpResponseMessage response = await _httpClient.GetAsync(requestUri);
             if (response.IsSuccessStatusCode) 

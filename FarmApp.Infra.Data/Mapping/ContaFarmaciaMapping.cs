@@ -47,7 +47,7 @@ namespace FarmApp.Infra.Data.Mapping
                 .HasMaxLength(100)
                 .HasColumnName("nome_fantasia");
 
-            entity.Property(e => e.NumeroEndereçofarmacia)
+            entity.Property(e => e.NumeroEnderecofarmacia)
                 .HasMaxLength(10)
                 .HasColumnName("numero_endereçofarmacia");
 

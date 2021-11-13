@@ -8,5 +8,6 @@ namespace FarmApp.Domain.Models.GoogleMaps
     {
         public List<AddressComponent> Address_components { get; set; }
         public string Formatted_address { get; set; }
+        public IList<Row> Rows { get; set; }
     }
 }

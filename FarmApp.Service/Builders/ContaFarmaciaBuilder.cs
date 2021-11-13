@@ -106,9 +106,9 @@ namespace FarmApp.Service.Builders
         {
             if (string.IsNullOrEmpty(numero))
             {
-                throw new ArgumentNullException(nameof(_contaFarmacia.NumeroEndereçofarmacia));
+                throw new ArgumentNullException(nameof(_contaFarmacia.NumeroEnderecofarmacia));
             }
-            _contaFarmacia.NumeroEndereçofarmacia = numero;
+            _contaFarmacia.NumeroEnderecofarmacia = numero;
             return this;
         }
 

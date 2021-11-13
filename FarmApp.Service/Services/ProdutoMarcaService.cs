@@ -17,6 +17,7 @@ namespace FarmApp.Service.Services
         private readonly IApresentacaoProdutoService _apresentacaoProdutoService;
         private readonly IProdutoService _produtoService;
         private readonly IProdutoTipoService _produtoTipoService;
+
         private readonly IMapper _mapper;
 
         public ProdutoMarcaService(
@@ -32,22 +33,12 @@ namespace FarmApp.Service.Services
             _apresentacaoProdutoService = apresentacaoProdutoService;
             _produtoService = produtoService;
             _produtoTipoService = produtoTipoService;
+
             _mapper = mapper;
         }
         public async Task<IList<ProdutoMarcaDTO>> GetProdutosPorTipoAsync(ProdutoDTO produtoDTO)
         {
-            var produtosMarca = new List<ProdutoMarcaDTO>();
-            var produtosPoco = await GetAllAsync();
-            produtosPoco = produtosPoco.Take(10).ToList();
-            foreach(var produtoPoco in produtosPoco)
-            {
-                await MontaProdutoMarca(produtoPoco);
-                if(produtoPoco.Produto.IdprodutoTipo == produtoDTO.IdTipoProduto)
-                {
-                    var produtoMarca = _mapper.Map<ProdutoMarca>(produtoPoco);
-                    produtosMarca.Add(_mapper.Map<ProdutoMarcaDTO>(produtoMarca));
-                }
-            }
+            var produtosMarca = await GetAllProdutosMarca();
             if (!string.IsNullOrEmpty(produtoDTO.Busca))
             {
                 produtosMarca = produtosMarca
@@ -60,7 +51,6 @@ namespace FarmApp.Service.Services
             }
             return produtosMarca;
         }
-
         public async Task MontaProdutoMarca(ProdutoMarcaPoco produtoPoco)
         {
             produtoPoco.Marca = await _marcaService.GetByIdAsync(produtoPoco.Idmarca);
@@ -76,5 +66,21 @@ namespace FarmApp.Service.Services
                 throw new ArgumentNullException(nameof(produtoPoco.Produto));
             }
         }
+
+        public async Task<IList<ProdutoMarcaDTO>> GetAllProdutosMarca()
+        {
+            var produtosMarca = new List<ProdutoMarcaDTO>();
+            var produtosPoco = await GetAllAsync();
+            produtosPoco = produtosPoco.Take(10).ToList();
+            foreach (var produtoPoco in produtosPoco)
+            {
+                await MontaProdutoMarca(produtoPoco);
+                var produtoMarca = _mapper.Map<ProdutoMarca>(produtoPoco);
+                produtosMarca.Add(_mapper.Map<ProdutoMarcaDTO>(produtoMarca));
+            }
+            return produtosMarca;
+        }
+
+       
     }
 }
