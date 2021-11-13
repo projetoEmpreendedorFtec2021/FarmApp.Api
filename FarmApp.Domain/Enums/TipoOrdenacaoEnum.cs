@@ -1,6 +1,6 @@
 ﻿namespace FarmApp.Domain.Enums
 {
-    public enum TipoPesquisaEnum
+    public enum TipoOrdenacaoEnum
     {
         Preco,
         Distancia

@@ -80,7 +80,7 @@ namespace FarmApp.Service.Services
                 }
             }
 
-            if (pesquisaProduto.TipoPesquisa == Domain.Enums.TipoPesquisaEnum.Preco)
+            if (pesquisaProduto.TipoOrdenacao == Domain.Enums.TipoOrdenacaoEnum.Preco)
             {
                 return pesquisaProdutoList
                     .OrderBy(x => x.Preco)
