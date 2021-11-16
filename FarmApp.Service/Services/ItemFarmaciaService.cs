@@ -6,6 +6,7 @@ using FarmApp.Domain.Models.DTO;
 using FarmApp.Domain.Models.Poco;
 using FarmApp.Service.Builders;
 using FarmApp.Service.Validators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace FarmApp.Service.Services
             _contaFarmaciaService = contaFarmaciaService;
             _mapper = mapper;
             _itemFarmaciaRepository = itemFarmaciaRepository;
+
         }
 
         public async Task<bool> AddOrUpdateItensFarmaciaAsync(IList<ItemFarmaciaDTO> itens)
@@ -79,10 +81,10 @@ namespace FarmApp.Service.Services
                 .Take(10)
                 .ToList();
 
-            foreach(var produtoMarcaPoco in produtosMarcaPoco)
+            foreach (var produtoMarcaPoco in produtosMarcaPoco)
             {
                 await _produtoMarcaService.MontaProdutoMarca(produtoMarcaPoco);
-                if(produtoMarcaPoco.Produto.IdprodutoTipo == produto.IdTipoProduto)
+                if (produtoMarcaPoco.Produto.IdprodutoTipo == produto.IdTipoProduto)
                 {
                     var produtoMarcaItemFarmacia = new ProdutoMarcaItemFarmacia();
                     var produtoMarca = _mapper.Map<ProdutoMarca>(produtoMarcaPoco);
@@ -111,9 +113,17 @@ namespace FarmApp.Service.Services
 
         }
 
+        public async Task<IList<ItemFarmaciaPoco>> GetItensFarmaciaPorIdProdutoMarca(int idProdutoMarca)
+        {
+            var itens = await GetAllAsync();
+            return itens
+                .Where(x => x.IdprodutoMarca == idProdutoMarca)
+                .ToList();
+        }
+
         private void MontaProdutoMarcaItemFarmacia(
-            IList<ItemFarmaciaPoco> itensFarmaciaPoco, 
-            ProdutoMarcaPoco produtoMarcaPoco, 
+            IList<ItemFarmaciaPoco> itensFarmaciaPoco,
+            ProdutoMarcaPoco produtoMarcaPoco,
             ProdutoMarcaItemFarmacia produtoMarcaItemFarmacia)
         {
             var itensFarmaciaFromProdutoMarca = itensFarmaciaPoco

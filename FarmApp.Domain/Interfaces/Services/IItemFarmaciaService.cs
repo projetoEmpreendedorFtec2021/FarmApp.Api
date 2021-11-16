@@ -11,5 +11,6 @@ namespace FarmApp.Domain.Interfaces.Services
         Task<bool> AddOrUpdateItensFarmaciaAsync(IList<ItemFarmaciaDTO> itens);
         Task DeleteItemFarmaciaAsync(int idItemFarmacia);
         Task<IList<ProdutoMarcaItemFarmacia>> GetProdutosMarcaItemFarmaciaAsync(ProdutoMarcaItemFarmaciaDTO produto);
+        Task<IList<ItemFarmaciaPoco>> GetItensFarmaciaPorIdProdutoMarca(int idProdutoMarca);
     }
 }
